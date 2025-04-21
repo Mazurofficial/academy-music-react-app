@@ -1,35 +1,23 @@
 import { useAppDispatch } from "../../../app/hooks"
-import { addTrack } from "../../../features/trackList/trackListApiSlice"
-import type { CreateTrackDto } from "../../../types/track"
+import {
+  openModal,
+  setModalAdd,
+} from "../../../features/modalWindow/modalWindowSlice"
+import Button from "../../Button/Button"
 import styles from "./AddTrackBtn.module.scss"
 
 export default function AddTrackBtn() {
-  const newTrack: CreateTrackDto = {
-    title: "Bohemian russss",
-    artist: "Justin FORKIN",
-    album: "SOSAAdr",
-    genres: ["Rock"],
-    coverImage: "https://picsum.photos/seed/Bohemian%20Rhapsody/300/300",
-  }
-
   const dispatch = useAppDispatch()
 
-  const handleAddTrack = async (track: CreateTrackDto) => {
-    const resultAction = await dispatch(addTrack(track))
-    if (addTrack.fulfilled.match(resultAction)) {
-      console.log("Track added successfully")
-    } else {
-      console.error("Error:", resultAction.payload)
-    }
+  const handleAddTrack = () => {
+    dispatch(openModal())
+    dispatch(setModalAdd())
   }
 
   return (
-    <button
-      className={styles.button}
-      onClick={() => void handleAddTrack(newTrack)}
-    >
+    <Button className={styles.button} onClick={handleAddTrack}>
       <i>+</i>
       <span className={styles.buttonText}>Add track</span>
-    </button>
+    </Button>
   )
 }

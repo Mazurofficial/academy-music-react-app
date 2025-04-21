@@ -8,7 +8,6 @@ import type {
 } from "../../types/track"
 import type { ExtraType } from "../../types/extra"
 import type { Status } from "../../types/status"
-import type { AxiosResponse } from "axios"
 
 export const loadTrackList = createAsyncThunk<
   {

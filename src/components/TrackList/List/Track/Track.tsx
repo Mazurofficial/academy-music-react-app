@@ -3,7 +3,7 @@ import { selectTrackById } from "../../../../features/trackList/trackListSelecto
 import type { Track } from "../../../../types/track"
 import styles from "./Track.module.scss"
 import DeleteTrackBtn from "./DeleteTrackBtn/DeleteTrackBtn"
-import EditTrackForm from "../../../EditTrackForm/EditTrackForm"
+import EditTrackBtn from "../../../EditTrackBtn/EditTrackBtn"
 
 type TrackProps = {
   id: string
@@ -19,7 +19,7 @@ export default function Track({ id }: TrackProps) {
           <h4>{track.title}</h4>
           <h5>{track.artist}</h5>
           {track.audioFile && <audio controls src={track.audioFile}></audio>}
-          <EditTrackForm id={track.id} />
+          <EditTrackBtn id={track.id} />
           <DeleteTrackBtn id={track.id} />
         </li>
       )}

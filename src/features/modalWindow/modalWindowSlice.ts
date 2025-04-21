@@ -1,0 +1,38 @@
+import type { PayloadAction } from "@reduxjs/toolkit"
+import { createSlice } from "@reduxjs/toolkit"
+import type { Track } from "../../types/track"
+
+type modalState = {
+  isVisible: boolean
+  type: "add" | "edit"
+  trackToEdit?: Track["id"]
+}
+
+const initialState: modalState = {
+  isVisible: false,
+  type: "add",
+}
+
+export const modalWindowSlice = createSlice({
+  name: "modal",
+  initialState,
+  reducers: {
+    openModal: state => {
+      state.isVisible = true
+    },
+    closeModal: state => {
+      state.isVisible = false
+      state.type = "add"
+    },
+    setModalEdit: (state, action: PayloadAction<Track["id"]>) => {
+      state.type = "edit"
+      state.trackToEdit = action.payload
+    },
+    setModalAdd: state => {
+      state.type = "add"
+    },
+  },
+})
+
+export const { openModal, closeModal, setModalEdit, setModalAdd } =
+  modalWindowSlice.actions

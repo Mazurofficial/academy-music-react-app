@@ -1,8 +1,15 @@
 import type React from "react"
 import { useState } from "react"
 import { useAppDispatch, useAppSelector } from "../../app/hooks"
-import { loadTracks } from "../../features/trackList/trackListApiSlice"
-import { selectTrackListMeta } from "../../features/trackList/trackListSelectors"
+import {
+  loadTracks,
+  setSorting,
+} from "../../features/trackList/trackListApiSlice"
+import {
+  selectTrackListMeta,
+  selectTrackListQuery,
+} from "../../features/trackList/trackListSelectors"
+import type { TrackQuery } from "../../types/track"
 
 const sortOptions = [
   { label: "Title", value: "title" },
@@ -19,19 +26,25 @@ const orderOptions = [
 export const Sorting = () => {
   const dispatch = useAppDispatch()
   const { page, limit } = useAppSelector(selectTrackListMeta)
-  const [sort, setSort] = useState<string | undefined>()
+  const [sort, setSort] = useState<TrackQuery["sort"]>()
   const [order, setOrder] = useState<"asc" | "desc">("asc")
+  const trackListQuery = useAppSelector(selectTrackListQuery)
 
   const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const newSort = e.target.value || undefined
+    const newSort = (e.target.value || undefined) as TrackQuery["sort"]
     setSort(newSort)
-    void dispatch(loadTracks({ sort: newSort, order, page, limit }))
+    void dispatch(
+      loadTracks({ ...trackListQuery, sort: newSort, order, page, limit }),
+    )
+    dispatch(setSorting({ sort, order }))
   }
 
   const handleOrderChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const newOrder = e.target.value as "asc" | "desc"
     setOrder(newOrder)
-    void dispatch(loadTracks({ sort, order: newOrder, page, limit }))
+    void dispatch(
+      loadTracks({ ...trackListQuery, sort, order: newOrder, page, limit }),
+    )
   }
 
   return (

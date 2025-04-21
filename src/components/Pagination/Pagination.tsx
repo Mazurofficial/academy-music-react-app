@@ -2,6 +2,7 @@ import { useAppDispatch, useAppSelector } from "../../app/hooks"
 import { loadTracks } from "../../features/trackList/trackListApiSlice"
 import {
   selectTrackListMeta,
+  selectTrackListQuery,
   selectTrackListStatus,
 } from "../../features/trackList/trackListSelectors"
 import Button from "../Button/Button"
@@ -11,15 +12,18 @@ import styles from "./Pagination.module.scss"
 export default function Pagination() {
   const dispatch = useAppDispatch()
   const { total, page, limit, totalPages } = useAppSelector(selectTrackListMeta)
+  const trackListQuery = useAppSelector(selectTrackListQuery)
   const status = useAppSelector(selectTrackListStatus)
 
   const handlePageChange = (newPage: number) => {
-    void dispatch(loadTracks({ page: newPage, limit: limit }))
+    void dispatch(
+      loadTracks({ ...trackListQuery, page: newPage, limit: limit }),
+    )
   }
 
   const handleLimitChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const newLimit = parseInt(e.target.value, 10)
-    void dispatch(loadTracks({ page: 1, limit: newLimit }))
+    void dispatch(loadTracks({ page: 1, limit: newLimit, ...trackListQuery }))
   }
 
   return (

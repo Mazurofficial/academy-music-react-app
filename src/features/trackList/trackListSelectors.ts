@@ -7,3 +7,4 @@ export const selectTrackById = (state: RootState, id: Track["id"]) => {
   return state.tracks.list.find(track => track.id === id)
 }
 export const selectTrackListMeta = (state: RootState) => state.tracks.meta
+export const selectTrackListQuery = (state: RootState) => state.tracks.query

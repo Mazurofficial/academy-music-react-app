@@ -1,3 +1,4 @@
+import type { PayloadAction } from "@reduxjs/toolkit"
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import type {
   Meta,
@@ -17,15 +18,7 @@ export const loadTracks = createAsyncThunk<
       meta: Meta
     }
   },
-  {
-    limit?: number
-    page?: number
-    sort?: string
-    order?: "asc" | "desc"
-    search?: string
-    genre?: string
-    artist?: string
-  },
+  TrackQuery,
   {
     extra: ExtraType
     rejectValue: string
@@ -41,12 +34,13 @@ export const loadTracks = createAsyncThunk<
     if (params.order) queryParams.append("order", params.order)
     if (params.search) queryParams.append("search", params.search)
     if (params.genre) queryParams.append("genre", params.genre)
-    if (params.artist) queryParams.append("artist", params.artist)
 
     const queryString = queryParams.toString()
+    console.log(queryString)
     const url = `${api.ALL_TRACKS}?${queryString}`
 
     try {
+      console.log(url)
       return await client.get(url)
     } catch (error) {
       if (error instanceof Error) return rejectWithValue(error.message)
@@ -170,13 +164,10 @@ const initialState: TrackListSlice = {
     totalPages: 0,
   },
   query: {
-    page: 1,
-    limit: 5,
     sort: undefined,
     order: "asc",
     search: undefined,
     genre: undefined,
-    artist: undefined,
   },
 }
 
@@ -184,18 +175,28 @@ export const trackListSlice = createSlice({
   name: "tracks",
   initialState,
   reducers: {
-    // setSorting: (
-    //   state,
-    //   action: PayloadAction<
-    //     Partial<{ sort: TrackQuery["sort"]; order: TrackQuery["order"] }>
-    //   >,
-    // ) => {
-    //   state.query = {
-    //     ...state.query,
-    //     ...action.payload,
-    //     page: 1, // Reset page on new sort
-    //   }
-    // },
+    setSorting: (
+      state,
+      action: PayloadAction<
+        Partial<{ sort: TrackQuery["sort"]; order: TrackQuery["order"] }>
+      >,
+    ) => {
+      state.query = {
+        ...state.query,
+        ...action.payload,
+        page: 1, // Reset page on new sort
+      }
+    },
+    setFilter: (
+      state,
+      action: PayloadAction<Partial<{ genre: TrackQuery["genre"] }>>,
+    ) => {
+      state.query = {
+        ...state.query,
+        ...action.payload,
+        page: 1, // Reset page on new sort
+      }
+    },
   },
   extraReducers: builder => {
     builder
@@ -255,3 +256,5 @@ export const trackListSlice = createSlice({
       })
   },
 })
+
+export const { setFilter, setSorting } = trackListSlice.actions

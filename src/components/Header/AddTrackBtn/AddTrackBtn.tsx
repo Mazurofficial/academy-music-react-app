@@ -1,17 +1,14 @@
 import { useAppDispatch } from "../../../app/hooks"
-import {
-  addTrack,
-  loadTrackList,
-} from "../../../features/trackList/trackListApiSlice"
+import { addTrack } from "../../../features/trackList/trackListApiSlice"
 import type { CreateTrackDto } from "../../../types/track"
 import styles from "./AddTrackBtn.module.scss"
 
 export default function AddTrackBtn() {
   const newTrack: CreateTrackDto = {
-    title: "Bohemian TESTTEST",
-    artist: "Justin",
-    album: "SOSAA",
-    genres: ["Rock", "Country"],
+    title: "Bohemian russss",
+    artist: "Justin FORKIN",
+    album: "SOSAAdr",
+    genres: ["Rock"],
     coverImage: "https://picsum.photos/seed/Bohemian%20Rhapsody/300/300",
   }
 
@@ -19,7 +16,6 @@ export default function AddTrackBtn() {
 
   const handleAddTrack = async (track: CreateTrackDto) => {
     const resultAction = await dispatch(addTrack(track))
-    await dispatch(loadTrackList())
     if (addTrack.fulfilled.match(resultAction)) {
       console.log("Track added successfully")
     } else {

@@ -35,7 +35,7 @@ export const loadTrackList = createAsyncThunk<
 )
 
 export const addTrack = createAsyncThunk<
-  CreateTrackDto, // return type
+  Track, // return type
   CreateTrackDto, // argument type (track to add)
   {
     extra: ExtraType
@@ -45,11 +45,8 @@ export const addTrack = createAsyncThunk<
   "tracks/add-track",
   async (newTrack, { extra: { client, api }, rejectWithValue }) => {
     try {
-      const response: AxiosResponse<{ data: Track }> = await client.post(
-        api.createNewTrack,
-        newTrack,
-      )
-      return response.data.data
+      const response = await client.post<Track>(api.createNewTrack, newTrack)
+      return response.data
     } catch (error) {
       if (error instanceof Error) return rejectWithValue(error.message)
       return rejectWithValue("Unknown error")
@@ -58,7 +55,7 @@ export const addTrack = createAsyncThunk<
 )
 
 export const editTrack = createAsyncThunk<
-  UpdateTrackDto, // returned updated track
+  Track, // returned updated track
   UpdateTrackDto, // input: edited track
   {
     extra: ExtraType
@@ -69,10 +66,7 @@ export const editTrack = createAsyncThunk<
   async (updatedTrack, { extra: { client, api }, rejectWithValue }) => {
     const { id, ...newMeta } = updatedTrack
     try {
-      const response = await client.put<UpdateTrackDto>(
-        api.updateTrackById(id),
-        newMeta,
-      )
+      const response = await client.put<Track>(api.updateTrackById(id), newMeta)
       return response.data
     } catch (error) {
       if (error instanceof Error) return rejectWithValue(error.message)
@@ -139,8 +133,9 @@ export const trackListSlice = createSlice({
         state.status = "rejected"
         state.error = action.payload ?? "Failed to add track"
       })
-      .addCase(addTrack.fulfilled, state => {
+      .addCase(addTrack.fulfilled, (state, action) => {
         state.status = "received"
+        state.list.unshift(action.payload)
       })
       .addCase(editTrack.pending, state => {
         state.status = "loading"
@@ -150,8 +145,14 @@ export const trackListSlice = createSlice({
         state.status = "rejected"
         state.error = action.payload ?? "Failed to update track"
       })
-      .addCase(editTrack.fulfilled, state => {
+      .addCase(editTrack.fulfilled, (state, action) => {
         state.status = "received"
+        const index = state.list.findIndex(
+          track => track.id === action.payload.id,
+        )
+        if (index !== -1) {
+          state.list[index] = action.payload
+        }
       })
       .addCase(deleteTrack.pending, state => {
         state.status = "loading"

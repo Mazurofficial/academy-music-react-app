@@ -1,4 +1,3 @@
-import { useState } from "react"
 import styles from "./Input.module.scss"
 
 export type InputProps = {
@@ -8,6 +7,8 @@ export type InputProps = {
   type: string
   className?: string
   disabled?: boolean
+  value: string
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
 
 export default function Input({
@@ -17,13 +18,9 @@ export default function Input({
   type = "text",
   className = "",
   disabled = false,
+  value,
+  onChange,
 }: InputProps) {
-  const [value, setValue] = useState("")
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(e.target.value)
-  }
-
   return (
     <div className={`${styles.inputRow} ${className}`}>
       {label && (
@@ -36,7 +33,7 @@ export default function Input({
         name={name}
         type={type}
         value={value}
-        onChange={handleChange}
+        onChange={onChange}
         placeholder={placeholder}
         className={styles.input}
         disabled={disabled}

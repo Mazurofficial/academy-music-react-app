@@ -1,4 +1,5 @@
 import { useAppDispatch } from "../../app/hooks"
+import { closeModal } from "../../features/modalWindow/modalWindowSlice"
 import { addTrack } from "../../features/trackList/trackListApiSlice"
 import type { CreateTrackDto } from "../../types/track"
 import Input from "../Input/Input"
@@ -28,6 +29,7 @@ export default function AddTrackForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    dispatch(closeModal())
     const resultAction = await dispatch(addTrack(formData))
     if (addTrack.fulfilled.match(resultAction)) {
       console.log("Track added successfully")

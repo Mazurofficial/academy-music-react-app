@@ -4,6 +4,8 @@ import type { UpdateTrackDto } from "../../types/track"
 import Input from "../Input/Input"
 import { selectTrackById } from "../../features/trackList/trackListSelectors"
 import { useState } from "react"
+import { closeModal } from "../../features/modalWindow/modalWindowSlice"
+import UploadTrackFile from "../UploadTrackFile/UploadTrackFile"
 
 export type EditTrackFormProps = {
   id: UpdateTrackDto["id"]
@@ -36,6 +38,7 @@ export default function EditTrackForm({ id }: EditTrackFormProps) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    dispatch(closeModal())
     const resultAction = await dispatch(editTrack(formData))
     if (editTrack.fulfilled.match(resultAction)) {
       console.log("Track updated successfully")
@@ -88,14 +91,15 @@ export default function EditTrackForm({ id }: EditTrackFormProps) {
             name="coverImage"
             placeholder="https://..."
           />
-          <Input
+          {/* <Input
             type="text"
             label="Audio File URL"
             value={formData.audioFile ?? ""}
             onChange={handleChange("audioFile")}
             name="audioFile"
             placeholder="https://..."
-          />
+          /> */}
+          <UploadTrackFile id={track.id} />
           <button type="submit">Save</button>
         </form>
       ) : (

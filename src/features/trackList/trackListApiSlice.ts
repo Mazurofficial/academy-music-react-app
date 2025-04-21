@@ -5,27 +5,49 @@ import type {
   Track,
   UpdateTrackDto,
   CreateTrackDto,
+  TrackQuery,
 } from "../../types/track"
 import type { ExtraType } from "../../types/extra"
 import type { Status } from "../../types/status"
 
-export const loadTrackList = createAsyncThunk<
+export const loadTracks = createAsyncThunk<
   {
     data: {
       data: TrackList
       meta: Meta
     }
   },
-  undefined,
+  {
+    limit?: number
+    page?: number
+    sort?: string
+    order?: "asc" | "desc"
+    search?: string
+    genre?: string
+    artist?: string
+  },
   {
     extra: ExtraType
     rejectValue: string
   }
 >(
   "tracks/load-tracks",
-  async (_, { extra: { client, api }, rejectWithValue }) => {
+  async (params, { extra: { client, api }, rejectWithValue }) => {
+    const queryParams = new URLSearchParams()
+
+    if (params.limit) queryParams.append("limit", params.limit.toString())
+    if (params.page) queryParams.append("page", params.page.toString())
+    if (params.sort) queryParams.append("sort", params.sort)
+    if (params.order) queryParams.append("order", params.order)
+    if (params.search) queryParams.append("search", params.search)
+    if (params.genre) queryParams.append("genre", params.genre)
+    if (params.artist) queryParams.append("artist", params.artist)
+
+    const queryString = queryParams.toString()
+    const url = `${api.ALL_TRACKS}?${queryString}`
+
     try {
-      return await client.get(api.ALL_TRACKS)
+      return await client.get(url)
     } catch (error) {
       if (error instanceof Error) return rejectWithValue(error.message)
       return rejectWithValue("Unknown error")
@@ -94,35 +116,101 @@ export const deleteTrack = createAsyncThunk<
   },
 )
 
+export type UploadTrackFileParams = {
+  id: string
+  file: File
+}
+
+export const uploadTrackFile = createAsyncThunk<
+  Track, // returned track
+  UploadTrackFileParams, // input { id, file }
+  {
+    extra: ExtraType
+    rejectValue: string
+  }
+>(
+  "tracks/upload-file",
+  async ({ id, file }, { extra: { client, api }, rejectWithValue }) => {
+    try {
+      const formData = new FormData()
+      formData.append("file", file)
+
+      const response = await client.post(
+        api.uploadAudioToTrackById(id),
+        formData,
+        {
+          headers: { "Content-Type": "multipart/form-data" },
+        },
+      )
+
+      return response.data as Track
+    } catch (error) {
+      if (error instanceof Error) return rejectWithValue(error.message)
+      return rejectWithValue("Unknown error")
+    }
+  },
+)
+
 type TrackListSlice = {
   status: Status
   error: string | null
   list: TrackList
+  meta: Meta
+  query: TrackQuery
 }
 
 const initialState: TrackListSlice = {
   status: "idle",
   error: null,
   list: [],
+  meta: {
+    total: 0,
+    page: 0,
+    limit: 0,
+    totalPages: 0,
+  },
+  query: {
+    page: 1,
+    limit: 5,
+    sort: undefined,
+    order: "asc",
+    search: undefined,
+    genre: undefined,
+    artist: undefined,
+  },
 }
 
 export const trackListSlice = createSlice({
   name: "tracks",
   initialState,
-  reducers: {},
+  reducers: {
+    // setSorting: (
+    //   state,
+    //   action: PayloadAction<
+    //     Partial<{ sort: TrackQuery["sort"]; order: TrackQuery["order"] }>
+    //   >,
+    // ) => {
+    //   state.query = {
+    //     ...state.query,
+    //     ...action.payload,
+    //     page: 1, // Reset page on new sort
+    //   }
+    // },
+  },
   extraReducers: builder => {
     builder
-      .addCase(loadTrackList.pending, state => {
+      .addCase(loadTracks.pending, state => {
         state.status = "loading"
         state.error = null
       })
-      .addCase(loadTrackList.rejected, (state, action) => {
+      .addCase(loadTracks.rejected, (state, action) => {
         state.status = "rejected"
         state.error = action.payload ?? "Cannot load data"
       })
-      .addCase(loadTrackList.fulfilled, (state, action) => {
+      .addCase(loadTracks.fulfilled, (state, action) => {
         state.status = "received"
         state.list = action.payload.data.data
+        state.meta = action.payload.data.meta
       })
       .addCase(addTrack.pending, state => {
         state.status = "loading"

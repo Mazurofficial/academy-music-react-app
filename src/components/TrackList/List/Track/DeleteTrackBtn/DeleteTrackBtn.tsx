@@ -1,6 +1,7 @@
 import { useAppDispatch } from "../../../../../app/hooks"
 import { deleteTrack } from "../../../../../features/trackList/trackListApiSlice"
 import type { Track } from "../../../../../types/track"
+import Button from "../../../../Button/Button"
 
 type DeleteTrackBtnProps = {
   id: Track["id"]
@@ -25,12 +26,12 @@ export default function DeleteTrackBtn({ id }: DeleteTrackBtnProps) {
   }
 
   return (
-    <button
+    <Button
       onClick={() => {
         handleDeleteClick(id)
       }}
     >
       X
-    </button>
+    </Button>
   )
 }

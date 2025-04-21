@@ -68,3 +68,13 @@ export type Meta = {
   limit: number
   totalPages: number
 }
+
+export type TrackQuery = {
+  page: number
+  limit: number
+  sort?: undefined | "title" | "artist" | "album" | "createdAt"
+  order?: "asc" | "desc"
+  search?: string
+  genre?: string
+  artist?: string
+}

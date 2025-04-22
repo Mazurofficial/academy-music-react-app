@@ -187,15 +187,13 @@ export const trackListSlice = createSlice({
         page: 1, // Reset page on new sort
       }
     },
-    setFilter: (
-      state,
-      action: PayloadAction<Partial<{ genre: TrackQuery["genre"] }>>,
-    ) => {
-      state.query = {
-        ...state.query,
-        ...action.payload,
-        page: 1, // Reset page on new sort
-      }
+    setFilter: (state, action: PayloadAction<Partial<TrackQuery["genre"]>>) => {
+      state.query.genre = action.payload
+      state.query.page = 1 // Reset page on new sort
+    },
+    setSearch: (state, action: PayloadAction<TrackQuery["search"]>) => {
+      state.query.search = action.payload
+      state.query.page = 1
     },
   },
   extraReducers: builder => {
@@ -257,4 +255,4 @@ export const trackListSlice = createSlice({
   },
 })
 
-export const { setFilter, setSorting } = trackListSlice.actions
+export const { setFilter, setSorting, setSearch } = trackListSlice.actions

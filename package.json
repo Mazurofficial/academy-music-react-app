@@ -21,7 +21,8 @@
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-redux": "^9.2.0",
-    "sass": "^1.86.3"
+    "sass": "^1.86.3",
+    "wavesurfer.js": "^7.9.4"
   },
   "devDependencies": {
     "@eslint/js": "^9.23.0",

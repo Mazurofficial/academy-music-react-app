@@ -16,14 +16,11 @@ export default function Pagination() {
   const status = useAppSelector(selectTrackListStatus)
 
   const handlePageChange = (newPage: number) => {
-    void dispatch(
-      loadTracks({ ...trackListQuery, page: newPage, limit: limit }),
-    )
+    void dispatch(loadTracks({ ...trackListQuery, page: newPage, limit }))
   }
 
-  const handleLimitChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const newLimit = parseInt(e.target.value, 10)
-    void dispatch(loadTracks({ page: 1, limit: newLimit, ...trackListQuery }))
+  const handleLimitChange = (newLimit: number) => {
+    void dispatch(loadTracks({ ...trackListQuery, page: 1, limit: newLimit }))
   }
 
   return (
@@ -52,7 +49,7 @@ export default function Pagination() {
       <PageLimitSelect
         totalPages={total}
         limit={limit}
-        onChange={handleLimitChange}
+        onLimitChange={handleLimitChange}
         status={status}
       />
     </div>

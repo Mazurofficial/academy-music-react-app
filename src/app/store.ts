@@ -6,10 +6,16 @@ import axios from "axios"
 import * as api from "../api/api"
 import { modalWindowSlice } from "../features/modalWindow/modalWindowSlice"
 import { genresSlice } from "../features/genres/genresSlice"
+import { audioSlice } from "../features/audio/audioSlice"
 
 // `combineSlices` automatically combines the reducers using
 // their `reducerPath`s, therefore we no longer need to call `combineReducers`.
-const rootReducer = combineSlices(trackListSlice, modalWindowSlice, genresSlice)
+const rootReducer = combineSlices(
+  trackListSlice,
+  modalWindowSlice,
+  genresSlice,
+  audioSlice,
+)
 // Infer the `RootState` type from the root reducer
 export type RootState = ReturnType<typeof rootReducer>
 

@@ -1,0 +1,42 @@
+.audioContainer {
+    width: 50%;
+    max-width: 600px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.waveform {
+    width: 100%;
+    height: 25px;
+    margin-right: 0.5rem;
+    transition: opacity 0.3s ease;
+}
+
+.hiddenWave {
+    display: none;
+}
+
+.activeWave {
+    display: block;
+}
+
+.playButton {
+    background-color: #3b82f6;
+    color: white;
+    transition: background-color 0.3s;
+    padding: 12px;
+    border-radius: 50%;
+    border: 0;
+
+    &:hover {
+        background-color: #2563eb;
+    }
+
+    i {
+        height: 15px;
+        width: 15px;
+    }
+
+
+}

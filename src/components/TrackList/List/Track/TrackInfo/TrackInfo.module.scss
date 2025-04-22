@@ -1,0 +1,26 @@
+.trackInfo {
+    padding: 5px 0;
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    align-self: stretch;
+    justify-content: space-between;
+    align-items: flex-start;
+
+    .trackTitle {
+        font-size: 22px;
+
+        .trackAlbum {
+            margin-left: 10px;
+            font-size: 16px;
+            font-weight: 500;
+            color: rgba($color: #000000, $alpha: .7)
+        }
+    }
+
+    .trackArtist {
+        font-size: 16px;
+        font-style: italic;
+        font-weight: 300;
+    }
+}

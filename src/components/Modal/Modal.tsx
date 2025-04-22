@@ -38,7 +38,7 @@ export const Modal = ({ children }: ModalProps) => {
           className={styles.modal_close}
           onClick={() => dispatch(closeModal())}
         >
-          Close X
+          <i className="fa-regular fa-circle-xmark"></i>
         </span>
         {children}
       </div>

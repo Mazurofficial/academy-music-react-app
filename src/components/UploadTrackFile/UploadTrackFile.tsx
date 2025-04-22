@@ -4,12 +4,15 @@ import type { Track } from "../../types/track"
 import { useAppDispatch } from "../../app/hooks"
 import { uploadTrackFile } from "../../features/trackList/trackListApiSlice"
 
-type Props = {
+type UploadTrackFileProps = {
   id: string
   currentTrack?: Track
 }
 
-export default function UploadTrackFile({ id, currentTrack }: Props) {
+export default function UploadTrackFile({
+  id,
+  currentTrack,
+}: UploadTrackFileProps) {
   const dispatch = useAppDispatch()
   const [file, setFile] = useState<File | null>(null)
   const [error, setError] = useState<string | null>(null)

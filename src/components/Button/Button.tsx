@@ -6,6 +6,7 @@ export type ButtonProps = {
   type?: "button" | "submit" | "reset"
   disabled?: boolean
   className?: string
+  title?: string
 }
 
 export default function Button({
@@ -14,6 +15,7 @@ export default function Button({
   type = "button",
   disabled = false,
   className = "",
+  title = "",
 }: ButtonProps) {
   return (
     <button
@@ -21,6 +23,7 @@ export default function Button({
       onClick={onClick}
       disabled={disabled}
       className={`${styles.button} ${className}`}
+      title={title}
     >
       {children}
     </button>

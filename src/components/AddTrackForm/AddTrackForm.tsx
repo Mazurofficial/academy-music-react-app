@@ -1,12 +1,17 @@
-import { useAppDispatch } from "../../app/hooks"
+import styles from "./AddTrackForm.module.scss"
+import { useAppDispatch, useAppSelector } from "../../app/hooks"
 import { closeModal } from "../../features/modalWindow/modalWindowSlice"
 import { addTrack } from "../../features/trackList/trackListApiSlice"
 import type { CreateTrackDto } from "../../types/track"
 import Input from "../Input/Input"
+import Button from "../Button/Button"
 import { useState } from "react"
+import { selectAllGenres } from "../../features/genres/trackListSelectors"
+import MultiSelect from "../MultiSelect/MultiSelect"
 
 export default function AddTrackForm() {
   const dispatch = useAppDispatch()
+  const genres = useAppSelector(selectAllGenres)
 
   const [formData, setFormData] = useState<CreateTrackDto>({
     title: "",
@@ -22,10 +27,16 @@ export default function AddTrackForm() {
       const value = e.target.value
       setFormData(prev => ({
         ...prev,
-        [field]:
-          field === "genres" ? value.split(",").map(str => str.trim()) : value,
+        [field]: value,
       }))
     }
+
+  const handleGenreChange = (value: string[]) => {
+    setFormData(prev => ({
+      ...prev,
+      genres: [...value],
+    }))
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -39,7 +50,7 @@ export default function AddTrackForm() {
   }
 
   return (
-    <form onSubmit={e => void handleSubmit(e)}>
+    <form onSubmit={e => void handleSubmit(e)} className={styles.addTrackForm}>
       <Input
         type="text"
         label="Title"
@@ -64,13 +75,12 @@ export default function AddTrackForm() {
         name="album"
         placeholder="Album title"
       />
-      <Input
-        type="text"
-        label="Genres (comma-separated)"
-        value={formData.genres.join(", ")}
-        onChange={handleChange("genres")}
+      <MultiSelect
+        label="Genres"
         name="genres"
-        placeholder="e.g. Rock, Pop"
+        options={genres.map(genre => ({ label: genre, value: genre }))}
+        value={formData.genres}
+        onChange={handleGenreChange}
       />
       <Input
         type="text"
@@ -80,7 +90,7 @@ export default function AddTrackForm() {
         name="coverImage"
         placeholder="https://..."
       />
-      <button type="submit">Save</button>
+      <Button type="submit">Save</Button>
     </form>
   )
 }

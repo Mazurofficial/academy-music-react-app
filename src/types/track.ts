@@ -72,7 +72,7 @@ export type Meta = {
 export type TrackQuery = {
   page?: number
   limit?: number
-  sort?: undefined | "title" | "artist" | "album" | "createdAt"
+  sort?: "title" | "artist" | "album" | "createdAt"
   order?: "asc" | "desc"
   search?: string
   genre?: string

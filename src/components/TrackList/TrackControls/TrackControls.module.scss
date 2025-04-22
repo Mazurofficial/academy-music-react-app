@@ -1,0 +1,15 @@
+.trackControls {
+    margin: 30px 0;
+    display: flex;
+    justify-content: space-between;
+
+    .leftPart {
+        display: flex;
+        gap: 30px;
+        width: 60%;
+    }
+
+    .rightPart {
+        width: 20%;
+    }
+}

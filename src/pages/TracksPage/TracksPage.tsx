@@ -3,7 +3,7 @@ import AddTrackForm from "../../components/AddTrackForm/AddTrackForm"
 import EditTrackForm from "../../components/EditTrackForm/EditTrackForm"
 import Header from "../../components/Header/Header"
 import TrackList from "../../components/TrackList/TrackList"
-import { Modal } from "../../components/UI/Modal/Modal"
+import { Modal } from "../../components/ui/Modal/Modal"
 import UploadTrackFile from "../../components/UploadTrackFile/UploadTrackFile"
 import {
   selectModalType,

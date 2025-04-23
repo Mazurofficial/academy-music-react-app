@@ -20,7 +20,7 @@ export default function Track({ id }: TrackProps) {
         <li className={styles.track} id={id}>
           <CoverImage id={id} />
           <TrackInfo id={id} />
-          {track.audioFile && <Audio id={id} />}
+          <Audio id={id} />
           <TrackBtns id={id} />
         </li>
       )}

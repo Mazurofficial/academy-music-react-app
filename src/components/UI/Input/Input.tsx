@@ -8,6 +8,7 @@ export type InputProps = {
   className?: string
   disabled?: boolean
   value: string
+  error?: string
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
 
@@ -19,6 +20,7 @@ export default function Input({
   className = "",
   disabled = false,
   value,
+  error,
   onChange,
 }: InputProps) {
   return (
@@ -35,9 +37,10 @@ export default function Input({
         value={value}
         onChange={onChange}
         placeholder={placeholder}
-        className={styles.input}
+        className={`${styles.input} ${error ? styles.inputError : ""}`}
         disabled={disabled}
       />
+      {error && <span className={styles.error}>{error}</span>}
     </div>
   )
 }

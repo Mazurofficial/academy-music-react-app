@@ -1,0 +1,56 @@
+.genreSelect {
+    .title {
+        font-size: 16px;
+        font-weight: 600;
+        margin-bottom: 6px;
+    }
+
+    .tags {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .addButton {
+        margin: 4px;
+        padding: 5px;
+        background-color: white;
+        border-radius: 5px;
+        box-shadow: 0 0 10px 5px rgba($color: #000000, $alpha: 0.03);
+        border: 1px solid #3b82f6;
+        cursor: pointer;
+        transition: all .3s ease-in-out;
+
+        i {
+            width: 13px;
+            height: 13px;
+            color: #3b82f6;
+            transition: all .3s ease-in-out;
+        }
+
+        &:hover {
+            background-color: #3b82f6;
+            color: white;
+
+            i {
+                color: white;
+            }
+        }
+    }
+
+    .dropdown {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+
+        .option {
+            padding: 5px 10px;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 0 10px 5px rgba($color: #000000, $alpha: 0.03);
+            border: 1px solid #3b82f6;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all .3s ease-in-out;
+        }
+    }
+}

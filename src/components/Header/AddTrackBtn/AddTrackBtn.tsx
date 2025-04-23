@@ -3,7 +3,7 @@ import {
   openModal,
   setModalAdd,
 } from "../../../features/modalWindow/modalWindowSlice"
-import Button from "../../UI/Button/Button"
+import Button from "../../ui/Button/Button"
 import styles from "./AddTrackBtn.module.scss"
 
 export default function AddTrackBtn() {

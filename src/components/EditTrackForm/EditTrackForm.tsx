@@ -2,12 +2,12 @@ import styles from "./EditTrackForm.module.scss"
 import { useAppDispatch, useAppSelector } from "../../app/hooks"
 import { editTrack } from "../../features/trackList/trackListApiSlice"
 import type { UpdateTrackDto } from "../../types/track"
-import Input from "../UI/Input/Input"
+import Input from "../ui/Input/Input"
 import { selectTrackById } from "../../features/trackList/trackListSelectors"
 import { useState } from "react"
 import { closeModal } from "../../features/modalWindow/modalWindowSlice"
 import UploadTrackFile from "../UploadTrackFile/UploadTrackFile"
-import Button from "../UI/Button/Button"
+import Button from "../ui/Button/Button"
 
 export type EditTrackFormProps = {
   id: UpdateTrackDto["id"]

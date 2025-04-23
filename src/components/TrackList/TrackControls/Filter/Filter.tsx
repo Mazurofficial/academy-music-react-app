@@ -11,7 +11,7 @@ import {
   selectTrackListMeta,
   selectTrackListQuery,
 } from "../../../../features/trackList/trackListSelectors"
-import Select from "../../../UI/Select/Select" // імпортуємо наш компонент
+import Select from "../../../ui/Select/Select" // імпортуємо наш компонент
 
 export const Filter = () => {
   const dispatch = useAppDispatch()

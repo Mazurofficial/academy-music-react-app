@@ -28,23 +28,3 @@
     }
 
 }
-
-// .selectRow {
-//     position: relative;
-
-//     .select {
-//       appearance: none;
-//       padding-right: 40px;
-//     }
-
-//     &::after {
-//       content: "▼";
-//       position: absolute;
-//       right: 16px; // тут контролюєш "margin"
-//       top: 50%;
-//       transform: translateY(-50%);
-//       pointer-events: none;
-//       font-size: 12px;
-//       color: #555;
-//     }
-//   }

@@ -4,7 +4,7 @@ import {
   setModalEdit,
 } from "../../../../../../features/modalWindow/modalWindowSlice"
 import type { Track } from "../../../../../../types/track"
-import Button from "../../../../../UI/Button/Button"
+import Button from "../../../../../ui/Button/Button"
 import styles from "./EditTrackBtn.module.scss"
 
 type EditTrackBtnProps = {

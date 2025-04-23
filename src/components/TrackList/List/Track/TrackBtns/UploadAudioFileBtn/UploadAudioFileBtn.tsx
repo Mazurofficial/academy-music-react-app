@@ -4,7 +4,7 @@ import {
   setModalUpload,
 } from "../../../../../../features/modalWindow/modalWindowSlice"
 import type { Track } from "../../../../../../types/track"
-import Button from "../../../../../UI/Button/Button"
+import Button from "../../../../../ui/Button/Button"
 import styles from "./UploadAudioFileBtn.module.scss"
 
 type UploadAudioFileBtnProps = {

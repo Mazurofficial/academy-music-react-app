@@ -1,11 +1,11 @@
-import { useAppDispatch, useAppSelector } from "../../../app/hooks"
-import { loadTracks } from "../../../features/trackList/trackListApiSlice"
+import { useAppDispatch, useAppSelector } from "../../app/hooks"
+import { loadTracks } from "../../features/trackList/trackListApiSlice"
 import {
   selectTrackListMeta,
   selectTrackListQuery,
   selectTrackListStatus,
-} from "../../../features/trackList/trackListSelectors"
-import Button from "../../ui/Button/Button"
+} from "../../features/trackList/trackListSelectors"
+import Button from "../ui/Button/Button"
 import PageLimitSelect from "./PageLimitSelect/PageLimitSelect"
 import styles from "./Pagination.module.scss"
 

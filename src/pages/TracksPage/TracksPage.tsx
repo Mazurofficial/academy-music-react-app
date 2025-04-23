@@ -4,7 +4,7 @@ import EditTrackForm from "../../components/EditTrackForm/EditTrackForm"
 import Header from "../../components/Header/Header"
 import TrackList from "../../components/TrackList/TrackList"
 import { Modal } from "../../components/ui/Modal/Modal"
-import UploadTrackFile from "../../components/UploadTrackFile/UploadTrackFile"
+import UploadAudioForm from "../../components/UploadAudioForm/UploadAudioForm"
 import {
   selectModalType,
   selectTrackToEdit,
@@ -25,7 +25,7 @@ export default function TracksPage() {
           <EditTrackForm id={trackToEditId ?? ""} />
         )}
         {modalWindowType === "upload" && (
-          <UploadTrackFile id={trackToEditId ?? ""} />
+          <UploadAudioForm id={trackToEditId ?? ""} />
         )}
       </Modal>
     </div>

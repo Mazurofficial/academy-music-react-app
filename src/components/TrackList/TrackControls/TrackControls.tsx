@@ -1,3 +1,4 @@
+import BulkDeleteButton from "./BulkDelete/BulkDelete"
 import { Filter } from "./Filter/Filter"
 import Search from "./Search/Search"
 import { Sorting } from "./Sorting/Sorting"
@@ -9,6 +10,7 @@ export default function TrackControls() {
       <div className={styles.leftPart}>
         <Sorting />
         <Filter />
+        <BulkDeleteButton />
       </div>
       <div className={styles.rightPart}>
         <Search />

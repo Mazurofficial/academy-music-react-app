@@ -1,15 +1,14 @@
 import styles from "./Audio.module.scss"
-import { useEffect, useRef } from "react"
-import WaveSurfer from "wavesurfer.js"
-import { useAppDispatch, useAppSelector } from "../../../../../app/hooks"
-import { selectPlayingTrackId } from "../../../../../features/audio/audioSelectors"
-import { playTrack, stopTrack } from "../../../../../features/audio/audioSlice"
+import { useRef, useEffect } from "react"
 import type { Track } from "../../../../../types/track"
+import { useAppDispatch, useAppSelector } from "../../../../../app/hooks"
 import { selectTrackById } from "../../../../../features/trackList/trackListSelectors"
-import Button from "../../../../ui/Button/Button"
+import { selectPlayingTrackId } from "../../../../../features/audio/audioSelectors"
 import { getAudioFile } from "../../../../../api/api"
+import { playTrack, stopTrack } from "../../../../../features/audio/audioSlice"
+import Button from "../../../../ui/Button/Button"
 
-type AudioProps = {
+export type AudioProps = {
   id: Track["id"]
 }
 
@@ -18,71 +17,41 @@ export default function Audio({ id }: AudioProps) {
   const track = useAppSelector(state => selectTrackById(state, id))
   const isPlayingTrackId = useAppSelector(selectPlayingTrackId)
   const isCurrentTrackPlaying = isPlayingTrackId === id
-  const hasAudio = Boolean(track?.audioFile)
+  const audioRef = useRef<HTMLAudioElement>(null)
 
-  const audioUrl = hasAudio ? getAudioFile(track?.audioFile ?? "") : ""
-
-  const waveformRef = useRef<HTMLDivElement>(null)
-  const wavesurfer = useRef<WaveSurfer | null>(null)
-
-  // Load wavesurfer if audioFile exists
-  useEffect(() => {
-    if (!hasAudio || !waveformRef.current) return
-
-    wavesurfer.current = WaveSurfer.create({
-      container: waveformRef.current,
-      waveColor: "#ccc",
-      progressColor: "#0ea5e9",
-      height: 25,
-      barWidth: 2,
-    })
-
-    void wavesurfer.current.load(audioUrl)
-
-    wavesurfer.current.on("finish", () => {
-      dispatch(stopTrack())
-    })
-
-    return () => {
-      wavesurfer.current?.destroy()
-      wavesurfer.current = null
-    }
-  }, [audioUrl, dispatch, hasAudio])
+  const audioUrl = track?.audioFile ? getAudioFile(track.audioFile) : ""
 
   useEffect(() => {
-    if (!wavesurfer.current) return
-    if (!isCurrentTrackPlaying) {
-      wavesurfer.current.pause()
-    }
-  }, [isPlayingTrackId, isCurrentTrackPlaying])
-
-  const togglePlay = () => {
-    if (!wavesurfer.current) return
+    const audioEl = audioRef.current
+    if (!audioEl) return
 
     if (isCurrentTrackPlaying) {
-      wavesurfer.current.pause()
+      void audioEl.play()
+    } else {
+      audioEl.pause()
+      audioEl.currentTime = 0
+    }
+  }, [isCurrentTrackPlaying])
+
+  const togglePlay = () => {
+    const audioEl = audioRef.current
+    if (!audioEl) return
+
+    if (isCurrentTrackPlaying) {
+      audioEl.pause()
       dispatch(stopTrack())
     } else {
-      void wavesurfer.current.play()
+      void audioEl.play()
       dispatch(playTrack(id))
     }
   }
 
   return (
     <div className={styles.audioContainer}>
-      <div
-        ref={waveformRef}
-        className={`${styles.waveform} ${
-          isCurrentTrackPlaying ? styles.activeWave : styles.inactiveWave
-        } ${!hasAudio ? styles.disabledWave : ""}`}
-      >
-        {!hasAudio && <div className={styles.placeholderLine} />}
-      </div>
       <Button
         onClick={togglePlay}
+        disabled={!track?.audioFile}
         className={styles.playButton}
-        disabled={!hasAudio}
-        title={!hasAudio ? "Audio file missing" : ""}
       >
         {isCurrentTrackPlaying ? (
           <i className="fa-solid fa-pause"></i>
@@ -90,6 +59,14 @@ export default function Audio({ id }: AudioProps) {
           <i className="fa-solid fa-play"></i>
         )}
       </Button>
+      {track?.audioFile && (
+        <audio
+          ref={audioRef}
+          src={audioUrl}
+          onEnded={() => dispatch(stopTrack())}
+          controls
+        />
+      )}
     </div>
   )
 }

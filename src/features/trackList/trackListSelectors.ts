@@ -8,3 +8,8 @@ export const selectTrackById = (state: RootState, id: Track["id"]) => {
 }
 export const selectTrackListMeta = (state: RootState) => state.tracks.meta
 export const selectTrackListQuery = (state: RootState) => state.tracks.query
+
+export const selectBulkDeleteMode = (state: RootState) =>
+  state.tracks.bulkDeleteMode
+export const selectSelectedTrackIds = (state: RootState) =>
+  state.tracks.selectedTrackIds

@@ -6,7 +6,6 @@ import Input from "../ui/Input/Input"
 import { selectTrackById } from "../../features/trackList/trackListSelectors"
 import { useState } from "react"
 import { closeModal } from "../../features/modalWindow/modalWindowSlice"
-import UploadTrackFile from "../UploadTrackFile/UploadTrackFile"
 import Button from "../ui/Button/Button"
 import { selectAllGenres } from "../../features/genres/trackListSelectors"
 import GenreSelect from "../GenreSelect/GenreSelect"
@@ -132,7 +131,6 @@ export default function EditTrackForm({ id }: EditTrackFormProps) {
             placeholder="https://..."
             error={errors.coverImage}
           />
-          <UploadTrackFile id={track.id} />
           <Button type="submit">Save</Button>
         </form>
       ) : (

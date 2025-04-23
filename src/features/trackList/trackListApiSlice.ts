@@ -40,7 +40,6 @@ export const loadTracks = createAsyncThunk<
     const url = `${api.ALL_TRACKS}?${queryString}`
 
     try {
-      console.log(url)
       return await client.get(url)
     } catch (error) {
       if (error instanceof Error) return rejectWithValue(error.message)
@@ -91,8 +90,8 @@ export const editTrack = createAsyncThunk<
 )
 
 export const deleteTrack = createAsyncThunk<
-  string, // return type: deleted track ID
-  string, // input: track ID to delete
+  Track["id"], // return type: deleted track ID
+  Track["id"], // input: track ID to delete
   {
     extra: ExtraType
     rejectValue: string
@@ -145,12 +144,62 @@ export const uploadTrackFile = createAsyncThunk<
   },
 )
 
+export const deleteTrackFile = createAsyncThunk<
+  Track, // return type: deleted track ID
+  Track["id"], // input: track ID to delete
+  {
+    extra: ExtraType
+    rejectValue: string
+  }
+>(
+  "tracks/delete-track-file",
+  async (trackId, { extra: { client, api }, rejectWithValue }) => {
+    try {
+      const response = await client.delete<Track>(
+        api.deleteAudioToTrackById(trackId),
+      )
+      return response.data
+    } catch (error) {
+      if (error instanceof Error) return rejectWithValue(error.message)
+      return rejectWithValue("Unknown error")
+    }
+  },
+)
+
+export const deleteTracksBulk = createAsyncThunk<
+  {
+    data: {
+      success: string[]
+      failed: string[]
+    }
+  }, // return type: deleted track ID
+  {
+    ids: Track["id"][]
+  }, // input: track ID to delete
+  {
+    extra: ExtraType
+    rejectValue: string
+  }
+>(
+  "tracks/delete-tracks-bulk",
+  async (tracksToDelete, { extra: { client, api }, rejectWithValue }) => {
+    try {
+      return await client.post(api.deleteMultipleTracks, tracksToDelete)
+    } catch (error) {
+      if (error instanceof Error) return rejectWithValue(error.message)
+      return rejectWithValue("Unknown error")
+    }
+  },
+)
+
 type TrackListSlice = {
   status: Status
   error: string | null
   list: TrackList
   meta: Meta
   query: TrackQuery
+  bulkDeleteMode: boolean
+  selectedTrackIds: Track["id"][]
 }
 
 const initialState: TrackListSlice = {
@@ -169,6 +218,8 @@ const initialState: TrackListSlice = {
     search: undefined,
     genre: undefined,
   },
+  bulkDeleteMode: false,
+  selectedTrackIds: [],
 }
 
 export const trackListSlice = createSlice({
@@ -194,6 +245,23 @@ export const trackListSlice = createSlice({
     setSearch: (state, action: PayloadAction<TrackQuery["search"]>) => {
       state.query.search = action.payload
       state.query.page = 1
+    },
+    toggleBulkDeleteMode: state => {
+      state.bulkDeleteMode = !state.bulkDeleteMode
+      state.selectedTrackIds = []
+    },
+    selectTrack: (state, action: PayloadAction<string>) => {
+      if (!state.selectedTrackIds.includes(action.payload)) {
+        state.selectedTrackIds.push(action.payload)
+      }
+    },
+    unselectTrack: (state, action: PayloadAction<string>) => {
+      state.selectedTrackIds = state.selectedTrackIds.filter(
+        id => id !== action.payload,
+      )
+    },
+    clearSelectedTracks: state => {
+      state.selectedTrackIds = []
     },
   },
   extraReducers: builder => {
@@ -240,9 +308,22 @@ export const trackListSlice = createSlice({
           state.list[index] = action.payload
         }
       })
-      .addCase(deleteTrack.pending, state => {
+      .addCase(uploadTrackFile.pending, state => {
         state.status = "loading"
         state.error = null
+      })
+      .addCase(uploadTrackFile.rejected, (state, action) => {
+        state.status = "rejected"
+        state.error = action.payload ?? "Failed to update track"
+      })
+      .addCase(uploadTrackFile.fulfilled, (state, action) => {
+        state.status = "received"
+        const index = state.list.findIndex(
+          track => track.id === action.payload.id,
+        )
+        if (index !== -1) {
+          state.list[index] = action.payload
+        }
       })
       .addCase(deleteTrack.rejected, (state, action) => {
         state.status = "rejected"
@@ -252,7 +333,37 @@ export const trackListSlice = createSlice({
         state.status = "received"
         state.list = state.list.filter(track => track.id !== action.payload)
       })
+      .addCase(deleteTracksBulk.rejected, (state, action) => {
+        state.status = "rejected"
+        state.error = action.payload ?? "Failed to delete tracks"
+      })
+      .addCase(deleteTracksBulk.fulfilled, (state, action) => {
+        state.status = "received"
+        const deletedIds = action.payload.data.success
+        state.list = state.list.filter(track => !deletedIds.includes(track.id))
+      })
+      .addCase(deleteTrackFile.rejected, (state, action) => {
+        state.status = "rejected"
+        state.error = action.payload ?? "Failed to delete track file"
+      })
+      .addCase(deleteTrackFile.fulfilled, (state, action) => {
+        state.status = "received"
+        const index = state.list.findIndex(
+          track => track.id === action.payload.id,
+        )
+        if (index !== -1) {
+          state.list[index] = action.payload
+        }
+      })
   },
 })
 
-export const { setFilter, setSorting, setSearch } = trackListSlice.actions
+export const {
+  setFilter,
+  setSorting,
+  setSearch,
+  toggleBulkDeleteMode,
+  selectTrack,
+  unselectTrack,
+  clearSelectedTracks,
+} = trackListSlice.actions

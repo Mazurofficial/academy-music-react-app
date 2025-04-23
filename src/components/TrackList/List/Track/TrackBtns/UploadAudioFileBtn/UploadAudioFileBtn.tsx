@@ -1,31 +1,31 @@
 import { useAppDispatch } from "../../../../../../app/hooks"
 import {
   openModal,
-  setModalEdit,
+  setModalUpload,
 } from "../../../../../../features/modalWindow/modalWindowSlice"
 import type { Track } from "../../../../../../types/track"
 import Button from "../../../../../UI/Button/Button"
-import styles from "./EditTrackBtn.module.scss"
+import styles from "./UploadAudioFileBtn.module.scss"
 
-type EditTrackBtnProps = {
+type UploadAudioFileBtnProps = {
   id: Track["id"]
 }
 
-export default function EditTrackBtn({ id }: EditTrackBtnProps) {
+export default function UploadAudioFileBtn({ id }: UploadAudioFileBtnProps) {
   const dispatch = useAppDispatch()
 
-  const handleEditTrack = () => {
-    dispatch(setModalEdit(id))
+  const handleUploadAudio = () => {
+    dispatch(setModalUpload(id))
     dispatch(openModal())
   }
 
   return (
     <Button
       className={styles.button}
-      onClick={handleEditTrack}
+      onClick={handleUploadAudio}
       title="Edit meta"
     >
-      <i className="fa-solid fa-pen"></i>
+      <i className="fa-solid fa-upload"></i>
     </Button>
   )
 }

@@ -6,7 +6,7 @@ import { selectPlayingTrackId } from "../../../../../features/audio/audioSelecto
 import { playTrack, stopTrack } from "../../../../../features/audio/audioSlice"
 import type { Track } from "../../../../../types/track"
 import { selectTrackById } from "../../../../../features/trackList/trackListSelectors"
-import Button from "../../../../Button/Button"
+import Button from "../../../../UI/Button/Button"
 
 type AudioProps = {
   id: Track["id"]

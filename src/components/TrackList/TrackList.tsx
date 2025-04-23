@@ -1,4 +1,4 @@
-import Pagination from "../Pagination/Pagination"
+import Pagination from "./Pagination/Pagination"
 import List from "./List/List"
 import TrackControls from "./TrackControls/TrackControls"
 import styles from "./TrackList.module.scss"

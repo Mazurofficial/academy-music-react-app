@@ -10,7 +10,7 @@ import {
   selectTrackListQuery,
 } from "../../../../features/trackList/trackListSelectors"
 import type { TrackQuery } from "../../../../types/track"
-import Select from "../../../Select/Select"
+import Select from "../../../UI/Select/Select"
 
 const sortOptions = [
   { label: "Title", value: "title" },

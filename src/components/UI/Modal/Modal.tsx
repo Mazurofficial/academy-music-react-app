@@ -1,10 +1,9 @@
 import type React from "react"
 import { useEffect } from "react"
-import { useAppSelector } from "../../app/hooks"
-import { useAppDispatch } from "../../app/hooks"
 import styles from "./Modal.module.scss"
-import { selectIsModalVisible } from "../../features/modalWindow/modalWindowSelector"
-import { closeModal } from "../../features/modalWindow/modalWindowSlice"
+import { useAppDispatch, useAppSelector } from "../../../app/hooks"
+import { selectIsModalVisible } from "../../../features/modalWindow/modalWindowSelector"
+import { closeModal } from "../../../features/modalWindow/modalWindowSlice"
 
 type ModalProps = {
   children?: React.ReactNode

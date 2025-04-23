@@ -2,8 +2,9 @@ import { useAppSelector } from "../../app/hooks"
 import AddTrackForm from "../../components/AddTrackForm/AddTrackForm"
 import EditTrackForm from "../../components/EditTrackForm/EditTrackForm"
 import Header from "../../components/Header/Header"
-import { Modal } from "../../components/Modal/Modal"
 import TrackList from "../../components/TrackList/TrackList"
+import { Modal } from "../../components/UI/Modal/Modal"
+import UploadTrackFile from "../../components/UploadTrackFile/UploadTrackFile"
 import {
   selectModalType,
   selectTrackToEdit,
@@ -12,17 +13,19 @@ import styles from "./TracksPage.module.scss"
 
 export default function TracksPage() {
   const modalWindowType = useAppSelector(selectModalType)
-  const trackToEdit = useAppSelector(selectTrackToEdit)
+  const trackToEditId = useAppSelector(selectTrackToEdit)
 
   return (
     <div className={styles.tracksPage}>
       <Header />
       <TrackList />
       <Modal>
-        {modalWindowType === "add" ? (
-          <AddTrackForm />
-        ) : (
-          <EditTrackForm id={trackToEdit ?? ""} />
+        {modalWindowType === "add" && <AddTrackForm />}
+        {modalWindowType === "edit" && (
+          <EditTrackForm id={trackToEditId ?? ""} />
+        )}
+        {modalWindowType === "upload" && (
+          <UploadTrackFile id={trackToEditId ?? ""} />
         )}
       </Modal>
     </div>

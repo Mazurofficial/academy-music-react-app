@@ -1,5 +1,5 @@
-import type { Status } from "../../types/status"
-import Select from "../Select/Select"
+import type { Status } from "../../../../types/status"
+import Select from "../../../UI/Select/Select"
 import styles from "./PageLimitSelect.module.scss"
 
 type PageLimitSelectProps = {

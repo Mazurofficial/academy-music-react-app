@@ -3,11 +3,11 @@ import { useAppDispatch, useAppSelector } from "../../app/hooks"
 import { closeModal } from "../../features/modalWindow/modalWindowSlice"
 import { addTrack } from "../../features/trackList/trackListApiSlice"
 import type { CreateTrackDto } from "../../types/track"
-import Input from "../Input/Input"
-import Button from "../Button/Button"
+import Input from "../UI/Input/Input"
+import Button from "../UI/Button/Button"
 import { useState } from "react"
 import { selectAllGenres } from "../../features/genres/trackListSelectors"
-import MultiSelect from "../MultiSelect/MultiSelect"
+import MultiSelect from "../UI/MultiSelect/MultiSelect"
 
 export default function AddTrackForm() {
   const dispatch = useAppDispatch()

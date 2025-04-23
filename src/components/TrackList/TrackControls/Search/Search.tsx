@@ -10,7 +10,7 @@ import {
   loadTracks,
   setSearch,
 } from "../../../../features/trackList/trackListApiSlice"
-import Input from "../../../Input/Input"
+import Input from "../../../UI/Input/Input"
 
 export default function Search() {
   const dispatch = useAppDispatch()

@@ -1,11 +1,13 @@
+import styles from "./EditTrackForm.module.scss"
 import { useAppDispatch, useAppSelector } from "../../app/hooks"
 import { editTrack } from "../../features/trackList/trackListApiSlice"
 import type { UpdateTrackDto } from "../../types/track"
-import Input from "../Input/Input"
+import Input from "../UI/Input/Input"
 import { selectTrackById } from "../../features/trackList/trackListSelectors"
 import { useState } from "react"
 import { closeModal } from "../../features/modalWindow/modalWindowSlice"
 import UploadTrackFile from "../UploadTrackFile/UploadTrackFile"
+import Button from "../UI/Button/Button"
 
 export type EditTrackFormProps = {
   id: UpdateTrackDto["id"]
@@ -50,7 +52,10 @@ export default function EditTrackForm({ id }: EditTrackFormProps) {
   return (
     <>
       {track ? (
-        <form onSubmit={e => void handleSubmit(e)}>
+        <form
+          className={styles.editTrackForm}
+          onSubmit={e => void handleSubmit(e)}
+        >
           <Input
             type="text"
             label="Title"
@@ -91,16 +96,8 @@ export default function EditTrackForm({ id }: EditTrackFormProps) {
             name="coverImage"
             placeholder="https://..."
           />
-          {/* <Input
-            type="text"
-            label="Audio File URL"
-            value={formData.audioFile ?? ""}
-            onChange={handleChange("audioFile")}
-            name="audioFile"
-            placeholder="https://..."
-          /> */}
           <UploadTrackFile id={track.id} />
-          <button type="submit">Save</button>
+          <Button type="submit">Save</Button>
         </form>
       ) : (
         <p>Track not found</p>

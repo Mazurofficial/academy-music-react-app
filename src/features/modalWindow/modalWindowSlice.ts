@@ -4,7 +4,7 @@ import type { Track } from "../../types/track"
 
 type modalState = {
   isVisible: boolean
-  type: "add" | "edit"
+  type: "add" | "edit" | "upload"
   trackToEdit?: Track["id"]
 }
 
@@ -28,11 +28,20 @@ export const modalWindowSlice = createSlice({
       state.type = "edit"
       state.trackToEdit = action.payload
     },
+    setModalUpload: (state, action: PayloadAction<Track["id"]>) => {
+      state.type = "upload"
+      state.trackToEdit = action.payload
+    },
     setModalAdd: state => {
       state.type = "add"
     },
   },
 })
 
-export const { openModal, closeModal, setModalEdit, setModalAdd } =
-  modalWindowSlice.actions
+export const {
+  openModal,
+  closeModal,
+  setModalEdit,
+  setModalAdd,
+  setModalUpload,
+} = modalWindowSlice.actions

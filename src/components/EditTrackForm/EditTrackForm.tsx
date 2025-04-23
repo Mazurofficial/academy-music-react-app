@@ -8,6 +8,8 @@ import { useState } from "react"
 import { closeModal } from "../../features/modalWindow/modalWindowSlice"
 import UploadTrackFile from "../UploadTrackFile/UploadTrackFile"
 import Button from "../ui/Button/Button"
+import { selectAllGenres } from "../../features/genres/trackListSelectors"
+import GenreSelect from "../GenreSelect/GenreSelect"
 
 export type EditTrackFormProps = {
   id: UpdateTrackDto["id"]
@@ -16,6 +18,7 @@ export type EditTrackFormProps = {
 export default function EditTrackForm({ id }: EditTrackFormProps) {
   const dispatch = useAppDispatch()
   const track = useAppSelector(state => selectTrackById(state, id))
+  const genres = useAppSelector(selectAllGenres)
 
   const [formData, setFormData] = useState<UpdateTrackDto>({
     id: track?.id ?? "",
@@ -27,22 +30,54 @@ export default function EditTrackForm({ id }: EditTrackFormProps) {
     audioFile: track?.audioFile ?? "",
   })
 
+  const [errors, setErrors] = useState<Record<string, string>>({})
+
+  const validate = () => {
+    const newErrors: Record<string, string> = {}
+
+    if (!formData.title?.trim()) {
+      newErrors.title = "Title is required"
+    } else if (formData.title.length > 30) {
+      newErrors.title = "Title must be less than 30 characters"
+    }
+
+    if (!formData.artist?.trim()) {
+      newErrors.artist = "Artist is required"
+    } else if (formData.artist.length > 30) {
+      newErrors.artist = "Artist must be less than 30 characters"
+    }
+
+    if (formData.album && formData.album.length > 30) {
+      newErrors.album = "Album must be less than 30 characters"
+    }
+
+    setErrors(newErrors)
+    return Object.keys(newErrors).length === 0
+  }
+
   const handleChange =
     (field: keyof UpdateTrackDto) =>
     (e: React.ChangeEvent<HTMLInputElement>) => {
       const value = e.target.value
       setFormData(prev => ({
         ...prev,
-        [field]:
-          field === "genres" ? value.split(",").map(str => str.trim()) : value,
+        [field]: value,
       }))
     }
 
+  const handleGenreChange = (value: string[]) => {
+    setFormData(prev => ({
+      ...prev,
+      genres: [...value],
+    }))
+  }
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    dispatch(closeModal())
+    if (!validate()) return
     const resultAction = await dispatch(editTrack(formData))
     if (editTrack.fulfilled.match(resultAction)) {
+      dispatch(closeModal())
       console.log("Track updated successfully")
     } else {
       console.error("Update failed:", resultAction.payload)
@@ -63,6 +98,7 @@ export default function EditTrackForm({ id }: EditTrackFormProps) {
             onChange={handleChange("title")}
             name="title"
             placeholder="Track title"
+            error={errors.title}
           />
           <Input
             type="text"
@@ -71,6 +107,7 @@ export default function EditTrackForm({ id }: EditTrackFormProps) {
             onChange={handleChange("artist")}
             name="artist"
             placeholder="Artist name"
+            error={errors.artist}
           />
           <Input
             type="text"
@@ -79,14 +116,12 @@ export default function EditTrackForm({ id }: EditTrackFormProps) {
             onChange={handleChange("album")}
             name="album"
             placeholder="Album title"
+            error={errors.album}
           />
-          <Input
-            type="text"
-            label="Genres (comma-separated)"
-            value={formData.genres?.join(", ") ?? ""}
-            onChange={handleChange("genres")}
-            name="genres"
-            placeholder="e.g. Rock, Pop"
+          <GenreSelect
+            availableGenres={genres}
+            selectedGenres={formData.genres ?? []}
+            onChange={handleGenreChange}
           />
           <Input
             type="text"
@@ -95,6 +130,7 @@ export default function EditTrackForm({ id }: EditTrackFormProps) {
             onChange={handleChange("coverImage")}
             name="coverImage"
             placeholder="https://..."
+            error={errors.coverImage}
           />
           <UploadTrackFile id={track.id} />
           <Button type="submit">Save</Button>

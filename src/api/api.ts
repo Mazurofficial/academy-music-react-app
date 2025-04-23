@@ -1,4 +1,4 @@
-const BASE_URL = "http://localhost:3000"
+const BASE_URL = "http://localhost:8000"
 
 export const ALL_GENRES = BASE_URL + "/api/genres"
 export const ALL_TRACKS = BASE_URL + "/api/tracks"
@@ -14,7 +14,8 @@ export const getTracks = (pageLimit?: number, currentPage?: number) => {
     return ALL_TRACKS
   }
 }
-
+export const getAudioFile = (fileName: string) =>
+  BASE_URL + "/api/files/" + fileName
 export const createNewTrack = ALL_TRACKS
 export const getTrackBySlug = (slug: string) => ALL_TRACKS + "/" + slug
 export const updateTrackById = (id: string) => ALL_TRACKS + "/" + id

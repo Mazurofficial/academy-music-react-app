@@ -7,6 +7,7 @@ import { playTrack, stopTrack } from "../../../../../features/audio/audioSlice"
 import type { Track } from "../../../../../types/track"
 import { selectTrackById } from "../../../../../features/trackList/trackListSelectors"
 import Button from "../../../../ui/Button/Button"
+import { getAudioFile } from "../../../../../api/api"
 
 type AudioProps = {
   id: Track["id"]
@@ -19,9 +20,7 @@ export default function Audio({ id }: AudioProps) {
   const isCurrentTrackPlaying = isPlayingTrackId === id
   const hasAudio = Boolean(track?.audioFile)
 
-  const audioUrl = hasAudio
-    ? `http://localhost:3000/api/files/${track?.audioFile ?? ""}`
-    : ""
+  const audioUrl = hasAudio ? getAudioFile(track?.audioFile ?? "") : ""
 
   const waveformRef = useRef<HTMLDivElement>(null)
   const wavesurfer = useRef<WaveSurfer | null>(null)

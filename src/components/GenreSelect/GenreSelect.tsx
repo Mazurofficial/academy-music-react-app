@@ -8,6 +8,8 @@ type GenreSelectProps = {
   onChange: (genres: string[]) => void
 }
 
+const MAX_GENRES = 2
+
 export default function GenreSelect({
   availableGenres,
   selectedGenres,
@@ -39,15 +41,17 @@ export default function GenreSelect({
             }}
           />
         ))}
-        <button
-          type="button"
-          onClick={() => {
-            setIsOpen(!isOpen)
-          }}
-          className={styles.addButton}
-        >
-          <i className="fa fa-plus" aria-hidden="true"></i>
-        </button>
+        {selectedGenres.length <= MAX_GENRES && (
+          <button
+            type="button"
+            onClick={() => {
+              setIsOpen(!isOpen)
+            }}
+            className={styles.addButton}
+          >
+            <i className="fa fa-plus" aria-hidden="true"></i>
+          </button>
+        )}
       </div>
 
       {isOpen && (
@@ -55,7 +59,7 @@ export default function GenreSelect({
           {availableGenres
             .filter(genre => !selectedGenres.includes(genre))
             .map(genre => (
-              <div
+              <p
                 key={genre}
                 onClick={() => {
                   addGenre(genre)
@@ -63,7 +67,7 @@ export default function GenreSelect({
                 className={styles.option}
               >
                 {genre}
-              </div>
+              </p>
             ))}
         </div>
       )}

@@ -10,7 +10,7 @@ Designed with scalability and maintainability in mind, this project serves as a 
 
 ## Scripts
 
-- `install` - to install all dependacies
+- `install` - to install all dependencies
 - `dev`/`start` - start dev server and open browser
 - `build` - build for production
 - `preview` - locally preview production build

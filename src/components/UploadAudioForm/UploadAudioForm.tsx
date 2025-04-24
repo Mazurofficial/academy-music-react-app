@@ -20,7 +20,8 @@ export default function UploadAudioForm({ id }: UploadAudioFormProps) {
   const [file, setFile] = useState<File | null>(null)
   const [error, setError] = useState<string | null>(null)
   const fileInputRef = useRef<HTMLInputElement | null>(null)
-  const chooseDisabled = track?.audioFile !== undefined
+  const chooseDisabled =
+    track?.audioFile !== undefined && track.audioFile !== ""
 
   // "Choose file" button handler
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {

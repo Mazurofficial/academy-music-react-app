@@ -16,7 +16,7 @@ import Select from "../../ui/Select/Select" // імпортуємо наш ко�
 export default function Filter() {
   const dispatch = useAppDispatch()
   const genres = useAppSelector(selectAllGenres)
-  const { page, limit } = useAppSelector(selectTrackListMeta)
+  const { limit } = useAppSelector(selectTrackListMeta)
   const trackListQuery = useAppSelector(selectTrackListQuery)
   const [selectedGenre, setSelectedGenre] = useState("")
 
@@ -30,7 +30,12 @@ export default function Filter() {
     setSelectedGenre(genre)
     dispatch(setFilter(genre || undefined))
     void dispatch(
-      loadTracks({ ...trackListQuery, genre: genre || undefined, page, limit }),
+      loadTracks({
+        ...trackListQuery,
+        genre: genre || undefined,
+        page: 1,
+        limit,
+      }),
     )
   }
 

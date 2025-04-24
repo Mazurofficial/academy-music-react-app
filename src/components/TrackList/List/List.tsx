@@ -6,6 +6,7 @@ import {
 import styles from "./List.module.scss"
 import Track from "./Track/Track"
 import { useTrackList } from "../../../features/trackList/useTrackList"
+import Preloader from "../../ui/Preloader/Preloader"
 
 export default function List() {
   const list = useAppSelector(selectAllTrackList)
@@ -13,7 +14,7 @@ export default function List() {
   useTrackList()
 
   if (loadingStatus === "loading") {
-    return <h2 data-testid="loading-tracks">Loading...</h2>
+    return <Preloader />
   }
 
   return (

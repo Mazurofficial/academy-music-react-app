@@ -1,7 +1,10 @@
 import styles from "./Audio.module.scss"
 import { useRef, useEffect, useState } from "react"
-import type { Track } from "../../../types/track"
-import { selectTrackById } from "../../../features/trackList/trackListSelectors"
+import type { Track, TrackList } from "../../../types/track"
+import {
+  selectAllTrackList,
+  selectTrackById,
+} from "../../../features/trackList/trackListSelectors"
 import {
   playTrack,
   saveTrackProgress,
@@ -25,6 +28,23 @@ export default function Audio({ id }: AudioProps) {
   const isPlayingTrackId = useAppSelector(selectPlayingTrackId)
   const savedProgress = useAppSelector(selectTrackProgress(id))
   const isCurrentTrackPlaying = isPlayingTrackId === id
+  const tracks = useAppSelector(selectAllTrackList)
+
+  const getSongsHelper = (tracks: TrackList) => {
+    const songsIds = tracks.map(track => {
+      if (track.audioFile && track.audioFile !== "") {
+        return track.id
+      }
+    })
+    const filteredSongIds = songsIds.filter(id => id !== undefined)
+    return filteredSongIds
+  }
+
+  const filteredSongIds = getSongsHelper(tracks)
+
+  const nextTrack =
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    filteredSongIds[filteredSongIds.indexOf(id) + 1] ?? filteredSongIds[0] ?? ""
 
   const audioRef = useRef<HTMLAudioElement>(null)
 
@@ -47,12 +67,15 @@ export default function Audio({ id }: AudioProps) {
 
     audioEl.addEventListener("timeupdate", updateTime)
     audioEl.addEventListener("loadedmetadata", updateDuration)
-    audioEl.addEventListener("ended", () => dispatch(stopTrack()))
+    audioEl.addEventListener("ended", () => {
+      dispatch(playTrack(nextTrack))
+    })
 
     return () => {
       audioEl.removeEventListener("timeupdate", updateTime)
       audioEl.removeEventListener("loadedmetadata", updateDuration)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch])
 
   // Playback control

@@ -14,6 +14,7 @@ type UploadAudioFileBtnProps = {
 export default function UploadAudioFileBtn({ id }: UploadAudioFileBtnProps) {
   const dispatch = useAppDispatch()
 
+  // Open modal window with uploading audio file functionality
   const handleUploadAudio = () => {
     dispatch(setModalUpload(id))
     dispatch(openModal())

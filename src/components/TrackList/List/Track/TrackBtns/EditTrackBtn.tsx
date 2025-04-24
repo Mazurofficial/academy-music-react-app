@@ -14,6 +14,7 @@ type EditTrackBtnProps = {
 export default function EditTrackBtn({ id }: EditTrackBtnProps) {
   const dispatch = useAppDispatch()
 
+  // Open modal window with editting track form
   const handleEditTrack = () => {
     dispatch(setModalEdit(id))
     dispatch(openModal())

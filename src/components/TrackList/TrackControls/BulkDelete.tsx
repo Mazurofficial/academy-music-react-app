@@ -9,15 +9,15 @@ import {
 import {
   selectBulkDeleteMode,
   selectSelectedTrackIds,
-  selectTrackListQuery,
+  selectTrackListMeta,
 } from "../../../features/trackList/trackListSelectors"
 import Button from "../../ui/Button/Button"
 
 export default function BulkDelete() {
   const dispatch = useAppDispatch()
-  const { limit = 10 } = useAppSelector(selectTrackListQuery)
   const bulkDeleteMode = useAppSelector(selectBulkDeleteMode)
   const selectedTrackIds = useAppSelector(selectSelectedTrackIds)
+  const { limit } = useAppSelector(selectTrackListMeta)
 
   // Toggle BulkDelete mode
   const handleToggle = () => dispatch(toggleBulkDeleteMode())

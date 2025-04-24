@@ -25,6 +25,7 @@ export default function Select({
   options,
   value,
   onChange,
+  ...rest
 }: SelectProps) {
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     onChange(e.target.value)
@@ -45,6 +46,7 @@ export default function Select({
         onChange={handleChange}
         disabled={disabled}
         className={styles.select}
+        {...rest}
       >
         {placeholder && (
           <option value="" disabled hidden>

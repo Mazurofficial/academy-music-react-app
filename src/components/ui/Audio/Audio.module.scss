@@ -54,3 +54,13 @@
     text-align: center;
     color: #333;
 }
+
+@media (max-width:768px) {
+    .audioContainer {
+        width: 100%;
+    }
+
+    .audioControls {
+        width: 100%;
+    }
+}

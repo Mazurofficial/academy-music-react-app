@@ -1,7 +1,7 @@
 import { useAppSelector } from "../../../../../app/hooks"
 import { selectTrackById } from "../../../../../features/trackList/trackListSelectors"
 import type { Track } from "../../../../../types/track"
-import Genre from "./Genre/Genre"
+import Genre from "./Genre"
 import styles from "./Trackgenres.module.scss"
 
 type TrackGenresProps = {

@@ -35,10 +35,16 @@ export const audioSlice = createSlice({
       state,
       action: PayloadAction<{ id: Track["id"]; progress: number }>,
     ) {
-      state.trackProgressById.push({
-        id: action.payload.id,
-        progress: action.payload.progress,
-      })
+      const newTrackId = action.payload.id
+      const trackIsOld = state.trackProgressById.find(t => t.id === newTrackId)
+      if (!trackIsOld) {
+        state.trackProgressById.push({
+          id: action.payload.id,
+          progress: action.payload.progress,
+        })
+      } else {
+        trackIsOld.progress = action.payload.progress
+      }
     },
   },
 })

@@ -1,13 +1,8 @@
 import styles from "./Button.module.scss"
 
 export type ButtonProps = {
-  children: React.ReactNode
-  onClick?: () => void
   type?: "button" | "submit" | "reset"
-  disabled?: boolean
-  className?: string
-  title?: string
-}
+} & React.ButtonHTMLAttributes<HTMLButtonElement>
 
 export default function Button({
   children,
@@ -16,6 +11,7 @@ export default function Button({
   disabled = false,
   className = "",
   title = "",
+  ...rest
 }: ButtonProps) {
   return (
     <button
@@ -24,6 +20,7 @@ export default function Button({
       disabled={disabled}
       className={`${styles.button} ${className}`}
       title={title}
+      {...rest}
     >
       {children}
     </button>

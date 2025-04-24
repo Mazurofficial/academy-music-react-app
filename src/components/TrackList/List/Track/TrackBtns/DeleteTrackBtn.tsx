@@ -1,8 +1,8 @@
-import styles from "./DeleteTrackBtn.module.scss"
-import { useAppDispatch } from "../../../../../../app/hooks"
-import { deleteTrack } from "../../../../../../features/trackList/trackListApiSlice"
-import type { Track } from "../../../../../../types/track"
-import Button from "../../../../../ui/Button/Button"
+import styles from "./TrackBtns.module.scss"
+import { useAppDispatch } from "../../../../../app/hooks"
+import { deleteTrack } from "../../../../../features/trackList/trackListApiSlice"
+import type { Track } from "../../../../../types/track"
+import Button from "../../../../ui/Button/Button"
 
 type DeleteTrackBtnProps = {
   id: Track["id"]
@@ -28,11 +28,12 @@ export default function DeleteTrackBtn({ id }: DeleteTrackBtnProps) {
 
   return (
     <Button
-      className={styles.button}
+      className={`${styles.iconButton} ${styles.deleteButton}`}
       onClick={() => {
         handleDeleteClick(id)
       }}
       title="Delete track"
+      data-testid={`delete-track-${id}`}
     >
       <i className="fa-solid fa-trash"></i>
     </Button>

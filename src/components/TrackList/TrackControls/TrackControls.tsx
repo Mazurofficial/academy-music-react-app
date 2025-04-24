@@ -1,8 +1,8 @@
-import BulkDeleteButton from "./BulkDelete/BulkDelete"
-import { Filter } from "./Filter/Filter"
-import PageLimitSelect from "./PageLimitSelect/PageLimitSelect"
-import Search from "./Search/Search"
-import { Sorting } from "./Sorting/Sorting"
+import BulkDeleteButton from "./BulkDelete"
+import Filter from "./Filter"
+import PageLimitSelect from "./PageLimitSelect"
+import Search from "./Search"
+import Sorting from "./Sorting"
 import styles from "./TrackControls.module.scss"
 
 export default function TrackControls() {
@@ -10,8 +10,10 @@ export default function TrackControls() {
     <div className={styles.trackControls}>
       <div className={styles.leftPart}>
         <Sorting />
-        <Filter />
-        <PageLimitSelect />
+        <div className={styles.filterLimitContainer}>
+          <Filter />
+          <PageLimitSelect />
+        </div>
       </div>
       <div className={styles.rightPart}>
         <Search />

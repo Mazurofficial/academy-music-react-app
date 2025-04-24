@@ -10,7 +10,6 @@ import { useTrackList } from "../../../features/trackList/useTrackList"
 export default function List() {
   const list = useAppSelector(selectAllTrackList)
   const loadingStatus = useAppSelector(selectTrackListStatus)
-  console.log(list)
   useTrackList()
 
   if (loadingStatus === "loading") {
@@ -20,7 +19,7 @@ export default function List() {
           marginTop: "50px",
         }}
       >
-        Loading...
+        <h2 data-testid="loading-tracks">Loading...</h2>
       </div>
     )
   }

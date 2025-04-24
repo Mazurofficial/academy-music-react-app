@@ -1,17 +1,17 @@
-import styles from "./BulkDelete.module.scss"
-import { useAppDispatch, useAppSelector } from "../../../../app/hooks"
+import styles from "./TrackControls.module.scss"
+import { useAppDispatch, useAppSelector } from "../../../app/hooks"
 import {
   clearSelectedTracks,
   deleteTracksBulk,
   selectAllTracks,
   toggleBulkDeleteMode,
-} from "../../../../features/trackList/trackListApiSlice"
+} from "../../../features/trackList/trackListApiSlice"
 import {
   selectBulkDeleteMode,
   selectSelectedTrackIds,
   selectTrackListQuery,
-} from "../../../../features/trackList/trackListSelectors"
-import Button from "../../../ui/Button/Button"
+} from "../../../features/trackList/trackListSelectors"
+import Button from "../../ui/Button/Button"
 
 export default function BulkDeleteButton() {
   const dispatch = useAppDispatch()
@@ -38,7 +38,7 @@ export default function BulkDeleteButton() {
 
   return (
     <div className={styles.buttonsContainer}>
-      <Button onClick={handleToggle}>
+      <Button onClick={handleToggle} data-testid="select-mode-toggle">
         {bulkDeleteMode ? (
           "Cancel"
         ) : (
@@ -48,10 +48,16 @@ export default function BulkDeleteButton() {
         )}
       </Button>
       {bulkDeleteMode && selectedTrackIds.length < limit && (
-        <Button onClick={handleSelectAll}>Select all</Button>
+        <Button onClick={handleSelectAll} data-testid="select-all">
+          Select all
+        </Button>
       )}
       {bulkDeleteMode && selectedTrackIds.length > 0 && (
-        <Button onClick={handleBulkDelete} className={styles.deleteSelected}>
+        <Button
+          onClick={handleBulkDelete}
+          className={styles.deleteSelected}
+          data-testid="bulk-delete-button"
+        >
           Delete Selected ({selectedTrackIds.length})
         </Button>
       )}

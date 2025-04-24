@@ -21,12 +21,13 @@ export default function Pagination() {
   return (
     <>
       {totalPages !== 1 && (
-        <div className={styles.pagination}>
+        <div className={styles.pagination} data-testid="pagination">
           <Button
             onClick={() => {
               handlePageChange(page - 1)
             }}
             disabled={page === 1 || status === "loading"}
+            data-testid="pagination-prev"
           >
             Previous
           </Button>
@@ -38,6 +39,7 @@ export default function Pagination() {
               handlePageChange(page + 1)
             }}
             disabled={page === totalPages || status === "loading"}
+            data-testid="pagination-next"
           >
             Next
           </Button>

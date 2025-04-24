@@ -4,7 +4,7 @@ import type { Track } from "../../../../types/track"
 import styles from "./Track.module.scss"
 import CoverImage from "./CoverImage/CoverImage"
 import TrackInfo from "./TrackInfo/TrackInfo"
-import Audio from "./Audio/Audio"
+import Audio from "../../../ui/Audio/Audio"
 import TrackBtns from "./TrackBtns/TrackBtns"
 
 type TrackProps = {
@@ -17,7 +17,7 @@ export default function Track({ id }: TrackProps) {
   return (
     <>
       {track && (
-        <li className={styles.track} id={id}>
+        <li className={styles.track} id={id} data-testid={`track-item-${id}`}>
           <CoverImage id={id} />
           <TrackInfo id={id} />
           <Audio id={id} />

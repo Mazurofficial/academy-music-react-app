@@ -1,4 +1,4 @@
-import styles from "./Genre.module.scss"
+import styles from "./Trackgenres.module.scss"
 
 type GenreProps = {
   genre: string

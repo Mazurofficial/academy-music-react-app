@@ -2,15 +2,8 @@ import styles from "./Input.module.scss"
 
 export type InputProps = {
   label?: string
-  name: string
-  placeholder?: string
-  type: string
-  className?: string
-  disabled?: boolean
-  value: string
   error?: string
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
-}
+} & React.InputHTMLAttributes<HTMLInputElement>
 
 export default function Input({
   label,
@@ -22,6 +15,7 @@ export default function Input({
   value,
   error,
   onChange,
+  ...rest
 }: InputProps) {
   return (
     <div className={`${styles.inputRow} ${className}`}>
@@ -39,8 +33,13 @@ export default function Input({
         placeholder={placeholder}
         className={`${styles.input} ${error ? styles.inputError : ""}`}
         disabled={disabled}
+        {...rest}
       />
-      {error && <span className={styles.error}>{error}</span>}
+      {error && (
+        <span data-testid={`error-${name ?? ""}`} className={styles.error}>
+          {error}
+        </span>
+      )}
     </div>
   )
 }

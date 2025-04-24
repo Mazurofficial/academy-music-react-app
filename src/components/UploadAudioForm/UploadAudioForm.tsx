@@ -71,6 +71,7 @@ export default function UploadAudioForm({ id }: UploadAudioFormProps) {
         onChange={handleFileChange}
         ref={fileInputRef}
         className={styles.hiddenFileInput}
+        data-testid={`upload-track-${id}`}
       />
 
       {/* Кастомна кнопка для вибору файлу */}
@@ -79,7 +80,7 @@ export default function UploadAudioForm({ id }: UploadAudioFormProps) {
         className={styles.chooseButton}
         disabled={chooseDisabled}
       >
-        {file ? "Change file" : "Choose file"}
+        Choose file
       </Button>
       {chooseDisabled ? <p>Delete current track first</p> : null}
 

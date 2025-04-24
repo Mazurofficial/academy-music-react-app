@@ -1,11 +1,11 @@
-import { useAppDispatch } from "../../../../../../app/hooks"
+import { useAppDispatch } from "../../../../../app/hooks"
 import {
   openModal,
   setModalUpload,
-} from "../../../../../../features/modalWindow/modalWindowSlice"
-import type { Track } from "../../../../../../types/track"
-import Button from "../../../../../ui/Button/Button"
-import styles from "./UploadAudioFileBtn.module.scss"
+} from "../../../../../features/modalWindow/modalWindowSlice"
+import type { Track } from "../../../../../types/track"
+import Button from "../../../../ui/Button/Button"
+import styles from "./TrackBtns.module.scss"
 
 type UploadAudioFileBtnProps = {
   id: Track["id"]
@@ -21,7 +21,7 @@ export default function UploadAudioFileBtn({ id }: UploadAudioFileBtnProps) {
 
   return (
     <Button
-      className={styles.button}
+      className={styles.iconButton}
       onClick={handleUploadAudio}
       title="Edit meta"
     >

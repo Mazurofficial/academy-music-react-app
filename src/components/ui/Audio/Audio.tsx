@@ -1,19 +1,19 @@
 import styles from "./Audio.module.scss"
 import { useRef, useEffect, useState } from "react"
-import type { Track } from "../../../../../types/track"
-import { selectTrackById } from "../../../../../features/trackList/trackListSelectors"
+import type { Track } from "../../../types/track"
+import { selectTrackById } from "../../../features/trackList/trackListSelectors"
 import {
   playTrack,
   saveTrackProgress,
   stopTrack,
-} from "../../../../../features/audio/audioSlice"
+} from "../../../features/audio/audioSlice"
 import {
   selectPlayingTrackId,
   selectTrackProgress,
-} from "../../../../../features/audio/audioSelectors"
-import { getAudioFile } from "../../../../../api/api"
-import Button from "../../../../ui/Button/Button"
-import { useAppDispatch, useAppSelector } from "../../../../../app/hooks"
+} from "../../../features/audio/audioSelectors"
+import { getAudioFile } from "../../../api/api"
+import Button from "../Button/Button"
+import { useAppDispatch, useAppSelector } from "../../../app/hooks"
 
 export type AudioProps = {
   id: Track["id"]
@@ -98,20 +98,30 @@ export default function Audio({ id }: AudioProps) {
 
   return (
     <div className={styles.audioContainer}>
-      <Button
-        onClick={togglePlay}
-        disabled={!track?.audioFile}
-        className={styles.playButton}
-      >
-        {isCurrentTrackPlaying ? (
+      {isCurrentTrackPlaying ? (
+        <Button
+          onClick={togglePlay}
+          disabled={!track?.audioFile}
+          className={styles.playButton}
+          data-testid={`pause-button-${id}`}
+        >
           <i className="fa-solid fa-pause" />
-        ) : (
+        </Button>
+      ) : (
+        <Button
+          onClick={togglePlay}
+          disabled={!track?.audioFile}
+          className={styles.playButton}
+          data-testid={`play-button-${id}`}
+        >
           <i className="fa-solid fa-play" />
-        )}
-      </Button>
-
+        </Button>
+      )}
       {track?.audioFile ? (
-        <div className={styles.audioControls}>
+        <div
+          className={styles.audioControls}
+          data-testid={`audio-player-${id}`}
+        >
           <span className={styles.time}>{formatTime(progress)}</span>
           <input
             type="range"
@@ -121,6 +131,7 @@ export default function Audio({ id }: AudioProps) {
             value={progress}
             onChange={handleSeek}
             className={styles.progressBar}
+            data-testid={`audio-progress-${id}`}
           />
           <span className={styles.time}>{formatTime(duration)}</span>
           <audio ref={audioRef} src={audioUrl} hidden />
@@ -138,7 +149,7 @@ export default function Audio({ id }: AudioProps) {
             className={styles.progressBar}
           />
           <span className={styles.time}>{formatTime(duration)}</span>
-          <audio ref={audioRef} src={audioUrl} hidden />
+          <audio ref={audioRef} src={undefined} hidden aria-disabled />
         </div>
       )}
     </div>

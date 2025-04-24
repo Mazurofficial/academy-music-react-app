@@ -1,11 +1,11 @@
-import { useAppDispatch } from "../../../../../../app/hooks"
+import { useAppDispatch } from "../../../../../app/hooks"
 import {
   openModal,
   setModalEdit,
-} from "../../../../../../features/modalWindow/modalWindowSlice"
-import type { Track } from "../../../../../../types/track"
-import Button from "../../../../../ui/Button/Button"
-import styles from "./EditTrackBtn.module.scss"
+} from "../../../../../features/modalWindow/modalWindowSlice"
+import type { Track } from "../../../../../types/track"
+import Button from "../../../../ui/Button/Button"
+import styles from "./TrackBtns.module.scss"
 
 type EditTrackBtnProps = {
   id: Track["id"]
@@ -21,9 +21,10 @@ export default function EditTrackBtn({ id }: EditTrackBtnProps) {
 
   return (
     <Button
-      className={styles.button}
+      className={styles.iconButton}
       onClick={handleEditTrack}
       title="Edit meta"
+      data-testid={`edit-track-${id}`}
     >
       <i className="fa-solid fa-pen"></i>
     </Button>

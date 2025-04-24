@@ -1,16 +1,16 @@
-import styles from "./Sorting.module.scss"
+import styles from "./TrackControls.module.scss"
 import { useState } from "react"
-import { useAppDispatch, useAppSelector } from "../../../../app/hooks"
+import { useAppDispatch, useAppSelector } from "../../../app/hooks"
 import {
   loadTracks,
   setSorting,
-} from "../../../../features/trackList/trackListApiSlice"
+} from "../../../features/trackList/trackListApiSlice"
 import {
   selectTrackListMeta,
   selectTrackListQuery,
-} from "../../../../features/trackList/trackListSelectors"
-import type { TrackQuery } from "../../../../types/track"
-import Select from "../../../ui/Select/Select"
+} from "../../../features/trackList/trackListSelectors"
+import type { TrackQuery } from "../../../types/track"
+import Select from "../../ui/Select/Select"
 
 const sortOptions = [
   { label: "Title", value: "title" },
@@ -24,7 +24,7 @@ const orderOptions = [
   { label: "Descending", value: "desc" },
 ]
 
-export const Sorting = () => {
+export default function Sorting() {
   const dispatch = useAppDispatch()
   const { page, limit } = useAppSelector(selectTrackListMeta)
   const [sort, setSort] = useState<TrackQuery["sort"]>()
@@ -58,6 +58,7 @@ export const Sorting = () => {
         onChange={handleSortChange}
         options={[{ label: "--", value: "" }, ...sortOptions]}
         className={styles.sort}
+        data-testid="sort-select"
       />
       <Select
         name="order"

@@ -1,5 +1,5 @@
 import { Routes, Route } from "react-router-dom"
-import TracksPage from "../../pages/TracksPage/TracksPage"
+import TracksPage from "./pages/TracksPage/TracksPage"
 
 export default function AppRoutes() {
   return (

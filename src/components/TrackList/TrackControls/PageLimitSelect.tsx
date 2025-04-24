@@ -1,12 +1,12 @@
-import { useAppDispatch, useAppSelector } from "../../../../app/hooks"
-import { loadTracks } from "../../../../features/trackList/trackListApiSlice"
+import { useAppDispatch, useAppSelector } from "../../../app/hooks"
+import { loadTracks } from "../../../features/trackList/trackListApiSlice"
 import {
   selectTrackListMeta,
   selectTrackListQuery,
   selectTrackListStatus,
-} from "../../../../features/trackList/trackListSelectors"
-import Select from "../../../ui/Select/Select"
-import styles from "./PageLimitSelect.module.scss"
+} from "../../../features/trackList/trackListSelectors"
+import Select from "../../ui/Select/Select"
+import styles from "./TrackControls.module.scss"
 
 export default function PageLimitSelect() {
   const dispatch = useAppDispatch()
@@ -17,6 +17,7 @@ export default function PageLimitSelect() {
     label: val.toString(),
     value: val.toString(),
   }))
+
   const handleLimitChange = (newLimit: number) => {
     void dispatch(loadTracks({ ...trackListQuery, page: 1, limit: newLimit }))
   }

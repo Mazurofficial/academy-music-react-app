@@ -25,3 +25,9 @@
         font-weight: 300;
     }
 }
+
+@media (max-width: 768px) {
+    .trackInfo {
+        width: 100%;
+    }
+}

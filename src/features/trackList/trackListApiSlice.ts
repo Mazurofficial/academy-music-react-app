@@ -36,7 +36,6 @@ export const loadTracks = createAsyncThunk<
     if (params.genre) queryParams.append("genre", params.genre)
 
     const queryString = queryParams.toString()
-    console.log(queryString)
     const url = `${api.ALL_TRACKS}?${queryString}`
 
     try {

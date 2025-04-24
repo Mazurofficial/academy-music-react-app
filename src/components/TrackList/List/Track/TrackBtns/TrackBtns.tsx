@@ -9,10 +9,10 @@ import {
 } from "../../../../../features/trackList/trackListSelectors"
 import type { Track } from "../../../../../types/track"
 import Checkbox from "../../../../ui/Checkbox/Checkbox"
-import DeleteTrackBtn from "./DeleteTrackBtn/DeleteTrackBtn"
-import EditTrackBtn from "./EditTrackBtn/EditTrackBtn"
+import DeleteTrackBtn from "./DeleteTrackBtn"
+import EditTrackBtn from "./EditTrackBtn"
 import styles from "./TrackBtns.module.scss"
-import UploadAudioFileBtn from "./UploadAudioFileBtn/UploadAudioFileBtn"
+import UploadAudioFileBtn from "./UploadAudioFileBtn"
 
 type TrackBtnsProps = {
   id: Track["id"]
@@ -37,7 +37,11 @@ export default function TrackBtns({ id }: TrackBtnsProps) {
       <EditTrackBtn id={id} />
       <UploadAudioFileBtn id={id} />
       {bulkDeleteMode ? (
-        <Checkbox checked={isSelected} onChange={handleSelect} />
+        <Checkbox
+          checked={isSelected}
+          onChange={handleSelect}
+          data-testid={`track-checkbox-${id}`}
+        />
       ) : (
         <DeleteTrackBtn id={id} />
       )}

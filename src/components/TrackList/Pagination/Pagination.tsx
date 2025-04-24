@@ -6,12 +6,11 @@ import {
   selectTrackListStatus,
 } from "../../../features/trackList/trackListSelectors"
 import Button from "../../ui/Button/Button"
-import PageLimitSelect from "./PageLimitSelect/PageLimitSelect"
 import styles from "./Pagination.module.scss"
 
 export default function Pagination() {
   const dispatch = useAppDispatch()
-  const { total, page, limit, totalPages } = useAppSelector(selectTrackListMeta)
+  const { page, limit, totalPages } = useAppSelector(selectTrackListMeta)
   const trackListQuery = useAppSelector(selectTrackListQuery)
   const status = useAppSelector(selectTrackListStatus)
 
@@ -19,39 +18,31 @@ export default function Pagination() {
     void dispatch(loadTracks({ ...trackListQuery, page: newPage, limit }))
   }
 
-  const handleLimitChange = (newLimit: number) => {
-    void dispatch(loadTracks({ ...trackListQuery, page: 1, limit: newLimit }))
-  }
-
   return (
-    <div className={styles.pagination}>
-      <div>
-        <Button
-          onClick={() => {
-            handlePageChange(page - 1)
-          }}
-          disabled={page === 1 || status === "loading"}
-        >
-          Previous
-        </Button>
-        <span>
-          Page {page} of {totalPages}
-        </span>
-        <Button
-          onClick={() => {
-            handlePageChange(page + 1)
-          }}
-          disabled={page === totalPages || status === "loading"}
-        >
-          Next
-        </Button>
-      </div>
-      <PageLimitSelect
-        totalPages={total}
-        limit={limit}
-        onLimitChange={handleLimitChange}
-        status={status}
-      />
-    </div>
+    <>
+      {totalPages !== 1 && (
+        <div className={styles.pagination}>
+          <Button
+            onClick={() => {
+              handlePageChange(page - 1)
+            }}
+            disabled={page === 1 || status === "loading"}
+          >
+            Previous
+          </Button>
+          <span className={styles.info}>
+            Page {page} of {totalPages}
+          </span>
+          <Button
+            onClick={() => {
+              handlePageChange(page + 1)
+            }}
+            disabled={page === totalPages || status === "loading"}
+          >
+            Next
+          </Button>
+        </div>
+      )}
+    </>
   )
 }

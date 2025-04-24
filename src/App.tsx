@@ -1,10 +1,5 @@
-import "./App.scss"
-import TracksPage from "./pages/TracksPage/TracksPage"
+import AppRoutes from "./components/AppRoutes/AppRoutes"
 
 export function App() {
-  return (
-    <div className="App">
-      <TracksPage />
-    </div>
-  )
+  return <AppRoutes />
 }

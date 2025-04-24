@@ -1,0 +1,15 @@
+@use '../../../../styles/variables' as *;
+
+.buttonsContainer {
+    display: flex;
+    gap: 10px;
+
+    .deleteSelected {
+        background-color: $red-color;
+        transition: background-color 0.3s;
+
+        &:hover {
+            background-color: $red-color-hover;
+        }
+    }
+}

@@ -255,6 +255,12 @@ export const trackListSlice = createSlice({
         state.selectedTrackIds.push(action.payload)
       }
     },
+    selectAllTracks: state => {
+      state.list.map(track => {
+        if (!state.selectedTrackIds.find(selectedId => selectedId === track.id))
+          state.selectedTrackIds.push(track.id)
+      })
+    },
     unselectTrack: (state, action: PayloadAction<string>) => {
       state.selectedTrackIds = state.selectedTrackIds.filter(
         id => id !== action.payload,
@@ -364,6 +370,7 @@ export const {
   setSearch,
   toggleBulkDeleteMode,
   selectTrack,
+  selectAllTracks,
   unselectTrack,
   clearSelectedTracks,
 } = trackListSlice.actions

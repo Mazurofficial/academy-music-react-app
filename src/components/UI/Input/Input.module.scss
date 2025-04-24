@@ -1,3 +1,5 @@
+@use '../../../styles/variables' as *;
+
 .inputRow {
     display: flex;
     flex-direction: column;
@@ -17,15 +19,21 @@
         border-radius: 10px;
         border: 1px solid rgba($color: #000000, $alpha: .3);
         width: 100%;
+        transition: .2s ease-in-out;
+
+        &:focus {
+            border-color: $primary-color;
+        }
     }
 
+
     .inputError {
-        border-color: #ef4444; // red-500
+        border-color: $red-color; // red-500
     }
 
     .error {
         font-size: 10px;
-        color: #ef4444;
+        color: $red-color;
         margin-top: 5px;
     }
 }

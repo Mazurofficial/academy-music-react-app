@@ -1,0 +1,55 @@
+@use '../../../styles/variables' as *;
+
+.customCheckbox {
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+    position: relative;
+    user-select: none;
+
+    input {
+        position: absolute;
+        opacity: 0;
+        width: 0;
+        height: 0;
+    }
+
+    .checkmark {
+        height: 40px;
+        width: 40px;
+        background-color: #eee;
+        border-radius: 50%;
+        transition: all 0.2s ease;
+        position: relative;
+        padding: 5px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        &::after {
+            content: "";
+            position: relative;
+            display: none;
+            width: 6px;
+            height: 12px;
+            margin-bottom: 5px;
+            border: solid white;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+        }
+    }
+
+    input:checked~.checkmark {
+        background-color: $primary-color;
+
+        &::after {
+            display: block;
+        }
+    }
+
+    .label {
+        margin-left: 8px;
+        font-size: 14px;
+        color: $text-color;
+    }
+}

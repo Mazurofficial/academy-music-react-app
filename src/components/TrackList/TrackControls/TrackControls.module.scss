@@ -5,11 +5,15 @@
 
     .leftPart {
         display: flex;
-        gap: 30px;
+        gap: 10px;
         width: 60%;
     }
 
     .rightPart {
-        width: 20%;
+        width: 33%;
+        display: flex;
+        flex-direction: column;
+        align-items: end;
+        gap: 20px;
     }
 }

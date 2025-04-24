@@ -1,5 +1,5 @@
 import styles from "./UploadAudioForm.module.scss"
-import { useState } from "react"
+import { useRef, useState } from "react"
 import { useAppDispatch, useAppSelector } from "../../app/hooks"
 import {
   deleteTrackFile,
@@ -19,6 +19,8 @@ export default function UploadAudioForm({ id }: UploadAudioFormProps) {
   const track = useAppSelector(state => selectTrackById(state, id))
   const [file, setFile] = useState<File | null>(null)
   const [error, setError] = useState<string | null>(null)
+  const fileInputRef = useRef<HTMLInputElement | null>(null)
+  const chooseDisabled = track?.audioFile !== undefined
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selected = e.target.files?.[0]
@@ -62,15 +64,36 @@ export default function UploadAudioForm({ id }: UploadAudioFormProps) {
 
   return (
     <div className={styles.uploadContainer}>
-      <input type="file" accept=".mp3,.wav" onChange={handleFileChange} />
+      {/* Прихований input */}
+      <input
+        type="file"
+        accept=".mp3,.wav"
+        onChange={handleFileChange}
+        ref={fileInputRef}
+        className={styles.hiddenFileInput}
+      />
+
+      {/* Кастомна кнопка для вибору файлу */}
+      <Button
+        onClick={() => fileInputRef.current?.click()}
+        className={styles.chooseButton}
+        disabled={chooseDisabled}
+      >
+        {file ? "Change file" : "Choose file"}
+      </Button>
+      {chooseDisabled ? <p>Delete current track first</p> : null}
+
+      {/* Вивід обраного файлу + кнопки дій */}
       {file && (
         <div>
           <p>{file.name}</p>
-          <Button onClick={handleUpload}>Upload</Button>
+          <Button onClick={() => void handleUpload()}>Upload</Button>
           <Button onClick={handleRemove}>Remove</Button>
         </div>
       )}
+
       {error && <p style={{ color: "red" }}>{error}</p>}
+
       {track?.audioFile && (
         <div className={styles.oldTrack}>
           <audio controls src={getAudioFile(track.audioFile)} />

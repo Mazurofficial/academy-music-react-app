@@ -1,5 +1,7 @@
+@use '../../../../../../styles/variables' as *;
+
 .button {
-    background-color: #3b82f6;
+    background-color: $primary-color;
     color: white;
     transition: background-color 0.3s;
     padding: 12px;
@@ -7,7 +9,7 @@
     border: 0;
 
     &:hover {
-        background-color: #2563eb;
+        background-color: $secondary-color;
     }
 
     i {

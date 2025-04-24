@@ -16,8 +16,8 @@ export default function AddTrackBtn() {
 
   return (
     <Button className={styles.button} onClick={handleAddTrack}>
-      <i>+</i>
-      <span className={styles.buttonText}>Add track</span>
+      <i className="fa fa-plus" />
+      <span className={styles.buttonText}> Add track</span>
     </Button>
   )
 }

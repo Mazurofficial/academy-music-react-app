@@ -30,7 +30,7 @@ export default function GenreSelect({
 
   return (
     <div className={styles.genreSelect}>
-      <p className={styles.title}>Select genres:</p>
+      <p className={styles.title}>Select genres (max: {MAX_GENRES + 1})</p>
       <div className={styles.tags}>
         {selectedGenres.map(genre => (
           <GenreTag

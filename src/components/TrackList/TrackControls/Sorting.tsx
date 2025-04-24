@@ -31,6 +31,7 @@ export default function Sorting() {
   const [order, setOrder] = useState<"asc" | "desc">("asc")
   const trackListQuery = useAppSelector(selectTrackListQuery)
 
+  // Load sorted results from server
   const handleSortChange = (value: string) => {
     const newSort = (value || undefined) as TrackQuery["sort"]
     setSort(newSort)
@@ -40,6 +41,7 @@ export default function Sorting() {
     )
   }
 
+  // Load ordered results from server
   const handleOrderChange = (value: string) => {
     const newOrder = value as "asc" | "desc"
     setOrder(newOrder)

@@ -13,14 +13,16 @@ import {
 } from "../../../features/trackList/trackListSelectors"
 import Button from "../../ui/Button/Button"
 
-export default function BulkDeleteButton() {
+export default function BulkDelete() {
   const dispatch = useAppDispatch()
   const { limit = 10 } = useAppSelector(selectTrackListQuery)
   const bulkDeleteMode = useAppSelector(selectBulkDeleteMode)
   const selectedTrackIds = useAppSelector(selectSelectedTrackIds)
 
+  // Toggle BulkDelete mode
   const handleToggle = () => dispatch(toggleBulkDeleteMode())
 
+  // Send request to delete all selected tracks
   const handleBulkDelete = () => {
     if (
       selectedTrackIds.length > 0 &&
@@ -32,6 +34,7 @@ export default function BulkDeleteButton() {
     }
   }
 
+  // Select all tracks on page
   const handleSelectAll = () => {
     dispatch(selectAllTracks())
   }

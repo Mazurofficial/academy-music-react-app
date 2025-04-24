@@ -24,6 +24,7 @@ export default function TrackBtns({ id }: TrackBtnsProps) {
   const selectedTrackIds = useAppSelector(selectSelectedTrackIds)
   const isSelected = selectedTrackIds.includes(id)
 
+  // Select track for deleting
   const handleSelect = () => {
     if (isSelected) {
       dispatch(unselectTrack(id))

@@ -20,10 +20,12 @@ export default function Filter() {
   const trackListQuery = useAppSelector(selectTrackListQuery)
   const [selectedGenre, setSelectedGenre] = useState("")
 
+  // Load list of available genres
   useEffect(() => {
     void dispatch(loadGenres())
   }, [dispatch])
 
+  // Send request to load tracks of selected genres
   const handleGenreChange = (genre: string) => {
     setSelectedGenre(genre)
     dispatch(setFilter(genre || undefined))
@@ -32,6 +34,7 @@ export default function Filter() {
     )
   }
 
+  // Map genres to Option view
   const genreOptions = [
     { label: "All", value: "" },
     ...genres.map(genre => ({ label: genre, value: genre })),

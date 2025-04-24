@@ -1,4 +1,4 @@
-import BulkDeleteButton from "./BulkDelete"
+import BulkDelete from "./BulkDelete"
 import Filter from "./Filter"
 import PageLimitSelect from "./PageLimitSelect"
 import Search from "./Search"
@@ -17,7 +17,7 @@ export default function TrackControls() {
       </div>
       <div className={styles.rightPart}>
         <Search />
-        <BulkDeleteButton />
+        <BulkDelete />
       </div>
     </div>
   )

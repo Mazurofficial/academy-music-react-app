@@ -9,14 +9,13 @@ import {
   selectModalType,
   selectTrackToEdit,
 } from "../../features/modalWindow/modalWindowSelector"
-import styles from "./TracksPage.module.scss"
 
 export default function TracksPage() {
   const modalWindowType = useAppSelector(selectModalType)
   const trackToEditId = useAppSelector(selectTrackToEdit)
 
   return (
-    <div className={styles.tracksPage}>
+    <>
       <Header />
       <TrackList />
       <Modal>
@@ -28,6 +27,6 @@ export default function TracksPage() {
           <UploadAudioForm id={trackToEditId ?? ""} />
         )}
       </Modal>
-    </div>
+    </>
   )
 }

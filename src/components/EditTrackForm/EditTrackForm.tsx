@@ -31,6 +31,7 @@ export default function EditTrackForm({ id }: EditTrackFormProps) {
 
   const [errors, setErrors] = useState<Record<string, string>>({})
 
+  // Form validation function
   const validate = () => {
     const newErrors: Record<string, string> = {}
 
@@ -54,6 +55,7 @@ export default function EditTrackForm({ id }: EditTrackFormProps) {
     return Object.keys(newErrors).length === 0
   }
 
+  // onChange for text inputs
   const handleChange =
     (field: keyof UpdateTrackDto) =>
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -64,6 +66,7 @@ export default function EditTrackForm({ id }: EditTrackFormProps) {
       }))
     }
 
+  // onSelect for genre select field
   const handleGenreChange = (value: string[]) => {
     setFormData(prev => ({
       ...prev,
@@ -71,6 +74,7 @@ export default function EditTrackForm({ id }: EditTrackFormProps) {
     }))
   }
 
+  // onSubmit for form
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!validate()) return

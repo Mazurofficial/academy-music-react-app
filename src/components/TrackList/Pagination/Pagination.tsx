@@ -14,6 +14,7 @@ export default function Pagination() {
   const trackListQuery = useAppSelector(selectTrackListQuery)
   const status = useAppSelector(selectTrackListStatus)
 
+  // Send request to server with newPage
   const handlePageChange = (newPage: number) => {
     void dispatch(loadTracks({ ...trackListQuery, page: newPage, limit }))
   }

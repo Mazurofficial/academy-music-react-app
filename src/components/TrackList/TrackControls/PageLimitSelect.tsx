@@ -18,6 +18,7 @@ export default function PageLimitSelect() {
     value: val.toString(),
   }))
 
+  // Send request to load tracks with new Meta{limit}
   const handleLimitChange = (newLimit: number) => {
     void dispatch(loadTracks({ ...trackListQuery, page: 1, limit: newLimit }))
   }

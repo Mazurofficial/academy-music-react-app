@@ -22,6 +22,7 @@ export default function UploadAudioForm({ id }: UploadAudioFormProps) {
   const fileInputRef = useRef<HTMLInputElement | null>(null)
   const chooseDisabled = track?.audioFile !== undefined
 
+  // "Choose file" button handler
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selected = e.target.files?.[0]
     if (!selected) return
@@ -41,6 +42,7 @@ export default function UploadAudioForm({ id }: UploadAudioFormProps) {
     setError(null)
   }
 
+  // Upload audio file on server
   const handleUpload = async () => {
     if (!file) return
     const result = await dispatch(uploadTrackFile({ id, file }))
@@ -53,18 +55,20 @@ export default function UploadAudioForm({ id }: UploadAudioFormProps) {
     }
   }
 
+  // Delete temporary added file
   const handleRemove = () => {
     setFile(null)
     setError(null)
   }
 
+  // Delete existing file
   const handleDeleteFile = () => {
     void dispatch(deleteTrackFile(id))
   }
 
   return (
     <div className={styles.uploadContainer}>
-      {/* Прихований input */}
+      <h3>Upload audio file</h3>
       <input
         type="file"
         accept=".mp3,.wav"
@@ -73,8 +77,6 @@ export default function UploadAudioForm({ id }: UploadAudioFormProps) {
         className={styles.hiddenFileInput}
         data-testid={`upload-track-${id}`}
       />
-
-      {/* Кастомна кнопка для вибору файлу */}
       <Button
         onClick={() => fileInputRef.current?.click()}
         className={styles.chooseButton}
@@ -83,18 +85,16 @@ export default function UploadAudioForm({ id }: UploadAudioFormProps) {
         Choose file
       </Button>
       {chooseDisabled ? <p>Delete current track first</p> : null}
-
-      {/* Вивід обраного файлу + кнопки дій */}
       {file && (
         <div>
           <p>{file.name}</p>
-          <Button onClick={() => void handleUpload()}>Upload</Button>
-          <Button onClick={handleRemove}>Remove</Button>
+          <div className={styles.newTrackButtons}>
+            <Button onClick={() => void handleUpload()}>Upload</Button>
+            <Button onClick={handleRemove}>Remove</Button>
+          </div>
         </div>
       )}
-
       {error && <p style={{ color: "red" }}>{error}</p>}
-
       {track?.audioFile && (
         <div className={styles.oldTrack}>
           <audio controls src={getAudioFile(track.audioFile)} />

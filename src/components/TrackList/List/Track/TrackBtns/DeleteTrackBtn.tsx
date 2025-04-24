@@ -11,6 +11,7 @@ type DeleteTrackBtnProps = {
 export default function DeleteTrackBtn({ id }: DeleteTrackBtnProps) {
   const dispatch = useAppDispatch()
 
+  // Delete track by id
   const handleDeleteTrack = async (id: string) => {
     const result = await dispatch(deleteTrack(id))
     if (deleteTrack.fulfilled.match(result)) {
@@ -20,6 +21,7 @@ export default function DeleteTrackBtn({ id }: DeleteTrackBtnProps) {
     }
   }
 
+  // Open dialog window with deleting acceptance
   const handleDeleteClick = (id: string) => {
     if (window.confirm("Are you sure you want to delete this track?")) {
       void handleDeleteTrack(id)

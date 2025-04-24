@@ -1,7 +1,13 @@
+.fileNotFound {
+    width: 450px;
+    font-weight: 200;
+}
+
 .audioContainer {
     display: flex;
     align-items: center;
     gap: 20px;
+    width: 450px;
 }
 
 .audioControls {
@@ -9,7 +15,7 @@
     align-items: center;
     flex: 1;
     gap: 5px;
-    width: 400px;
+    width: 100%;
 }
 
 .playButton {
@@ -56,11 +62,11 @@
 }
 
 @media (max-width:768px) {
-    .audioContainer {
+    .fileNotFound {
         width: 100%;
     }
 
-    .audioControls {
+    .audioContainer {
         width: 100%;
     }
 }

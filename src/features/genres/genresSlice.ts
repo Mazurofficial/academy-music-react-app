@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import type { ExtraType } from "../../types/extra"
 import type { Status } from "../../types/status"
 
+// Loads a list of all available genres from the API and handles errors if they occur.
 export const loadGenres = createAsyncThunk<
   {
     data: string[]

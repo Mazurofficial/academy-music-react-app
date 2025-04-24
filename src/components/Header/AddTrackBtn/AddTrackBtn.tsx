@@ -9,6 +9,7 @@ import styles from "./AddTrackBtn.module.scss"
 export default function AddTrackBtn() {
   const dispatch = useAppDispatch()
 
+  // open modalwindow with AddTrackForm
   const handleAddTrack = () => {
     dispatch(openModal())
     dispatch(setModalAdd())
@@ -18,7 +19,7 @@ export default function AddTrackBtn() {
     <Button
       className={styles.button}
       onClick={handleAddTrack}
-      data-test="create-track-button"
+      data-testid="create-track-button"
     >
       <i className="fa fa-plus" />
       <span className={styles.buttonText}> Add track</span>

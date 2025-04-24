@@ -33,7 +33,7 @@ export default function Audio({ id }: AudioProps) {
 
   const audioUrl = track?.audioFile ? getAudioFile(track.audioFile) : ""
 
-  // Обробка оновлення прогресу
+  // Processing progress updates
   useEffect(() => {
     const audioEl = audioRef.current
     if (!audioEl) return
@@ -55,7 +55,7 @@ export default function Audio({ id }: AudioProps) {
     }
   }, [dispatch])
 
-  // Контроль відтворення
+  // Playback control
   useEffect(() => {
     const audioEl = audioRef.current
     if (!audioEl) return
@@ -69,6 +69,7 @@ export default function Audio({ id }: AudioProps) {
     }
   }, [isCurrentTrackPlaying, savedProgress])
 
+  // Play/pause toggle
   const togglePlay = () => {
     const audioEl = audioRef.current
     if (!audioEl) return
@@ -81,6 +82,7 @@ export default function Audio({ id }: AudioProps) {
     }
   }
 
+  // Updates the audio currentTime and UI progress when user seeks via the range input
   const handleSeek = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newTime = Number(e.target.value)
     const audioEl = audioRef.current
@@ -97,61 +99,48 @@ export default function Audio({ id }: AudioProps) {
   }
 
   return (
-    <div className={styles.audioContainer}>
-      {isCurrentTrackPlaying ? (
-        <Button
-          onClick={togglePlay}
-          disabled={!track?.audioFile}
-          className={styles.playButton}
-          data-testid={`pause-button-${id}`}
-        >
-          <i className="fa-solid fa-pause" />
-        </Button>
-      ) : (
-        <Button
-          onClick={togglePlay}
-          disabled={!track?.audioFile}
-          className={styles.playButton}
-          data-testid={`play-button-${id}`}
-        >
-          <i className="fa-solid fa-play" />
-        </Button>
-      )}
+    <>
       {track?.audioFile ? (
-        <div
-          className={styles.audioControls}
-          data-testid={`audio-player-${id}`}
-        >
-          <span className={styles.time}>{formatTime(progress)}</span>
-          <input
-            type="range"
-            min={0}
-            max={duration}
-            step={0.1}
-            value={progress}
-            onChange={handleSeek}
-            className={styles.progressBar}
-            data-testid={`audio-progress-${id}`}
-          />
-          <span className={styles.time}>{formatTime(duration)}</span>
-          <audio ref={audioRef} src={audioUrl} hidden />
+        <div className={styles.audioContainer}>
+          {isCurrentTrackPlaying ? (
+            <Button
+              onClick={togglePlay}
+              className={styles.playButton}
+              data-testid={`pause-button-${id}`}
+            >
+              <i className="fa-solid fa-pause" />
+            </Button>
+          ) : (
+            <Button
+              onClick={togglePlay}
+              className={styles.playButton}
+              data-testid={`play-button-${id}`}
+            >
+              <i className="fa-solid fa-play" />
+            </Button>
+          )}
+          <div
+            className={styles.audioControls}
+            data-testid={`audio-player-${id}`}
+          >
+            <span className={styles.time}>{formatTime(progress)}</span>
+            <input
+              type="range"
+              min={0}
+              max={duration}
+              step={0.1}
+              value={progress}
+              onChange={handleSeek}
+              className={styles.progressBar}
+              data-testid={`audio-progress-${id}`}
+            />
+            <span className={styles.time}>{formatTime(duration)}</span>
+            <audio ref={audioRef} src={audioUrl} hidden />
+          </div>
         </div>
       ) : (
-        <div className={styles.audioControls}>
-          <span className={styles.time}>{formatTime(progress)}</span>
-          <input
-            type="range"
-            min={0}
-            max={duration}
-            step={0.1}
-            value={progress}
-            onChange={handleSeek}
-            className={styles.progressBar}
-          />
-          <span className={styles.time}>{formatTime(duration)}</span>
-          <audio ref={audioRef} src={undefined} hidden aria-disabled />
-        </div>
+        <p className={styles.fileNotFound}>Upload audio file first.</p>
       )}
-    </div>
+    </>
   )
 }

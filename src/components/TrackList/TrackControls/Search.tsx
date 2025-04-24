@@ -34,6 +34,7 @@ export default function Search() {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { search, ...queryWithoutSearch } = trackListQuery
 
+      // Load searching results from server
       void dispatch(
         loadTracks({
           ...queryWithoutSearch,
@@ -50,6 +51,7 @@ export default function Search() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchInput])
 
+  // Handle search input change
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchInput(e.target.value)
   }

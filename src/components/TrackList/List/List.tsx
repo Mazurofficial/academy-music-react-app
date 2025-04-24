@@ -13,15 +13,7 @@ export default function List() {
   useTrackList()
 
   if (loadingStatus === "loading") {
-    return (
-      <div
-        style={{
-          marginTop: "50px",
-        }}
-      >
-        <h2 data-testid="loading-tracks">Loading...</h2>
-      </div>
-    )
+    return <h2 data-testid="loading-tracks">Loading...</h2>
   }
 
   return (

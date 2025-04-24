@@ -5,7 +5,9 @@ import logo from "../../assets/logo_tunee.svg"
 export default function Header() {
   return (
     <header className={styles.header}>
-      <img src={logo} alt="logo" />
+      <a href="/">
+        <img src={logo} alt="logo" />
+      </a>
       <AddTrackBtn />
     </header>
   )

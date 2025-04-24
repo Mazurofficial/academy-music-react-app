@@ -1,5 +1,9 @@
 .uploadContainer {
     padding: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
 
     .oldTrack {
         display: flex;
@@ -7,6 +11,11 @@
         gap: 20px;
         justify-content: center;
         margin: 20px 0;
+    }
+
+    .newTrackButtons {
+        display: flex;
+        gap: 10px;
     }
 
     .hiddenFileInput {

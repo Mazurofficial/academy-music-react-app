@@ -23,6 +23,7 @@ export default function AddTrackForm() {
   const [formData, setFormData] = useState(initialFormState)
   const [errors, setErrors] = useState<Record<string, string>>({})
 
+  // Form validation function
   const validate = () => {
     const newErrors: Record<string, string> = {}
 
@@ -53,6 +54,7 @@ export default function AddTrackForm() {
     return Object.keys(newErrors).length === 0
   }
 
+  // onChange for text inputs
   const handleChange =
     (field: keyof CreateTrackDto) =>
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -63,6 +65,7 @@ export default function AddTrackForm() {
       }))
     }
 
+  // onSelect for genre select field
   const handleGenreChange = (value: string[]) => {
     setFormData(prev => ({
       ...prev,
@@ -70,6 +73,7 @@ export default function AddTrackForm() {
     }))
   }
 
+  // onSubmit for form
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!validate()) return
@@ -84,7 +88,11 @@ export default function AddTrackForm() {
   }
 
   return (
-    <form onSubmit={e => void handleSubmit(e)} className={styles.addTrackForm}>
+    <form
+      onSubmit={e => void handleSubmit(e)}
+      className={styles.addTrackForm}
+      data-testid="track-form"
+    >
       <Input
         type="text"
         label="Title"
@@ -93,6 +101,7 @@ export default function AddTrackForm() {
         name="title"
         placeholder="Track title"
         error={errors.title}
+        data-testid="input-title"
       />
       <Input
         type="text"
@@ -102,6 +111,7 @@ export default function AddTrackForm() {
         name="artist"
         placeholder="Artist name"
         error={errors.artist}
+        data-testid="input-artist"
       />
       <Input
         type="text"
@@ -111,6 +121,7 @@ export default function AddTrackForm() {
         name="album"
         placeholder="Album title"
         error={errors.album}
+        data-testid="input-album"
       />
       <GenreSelect
         availableGenres={genres}
@@ -125,8 +136,11 @@ export default function AddTrackForm() {
         name="coverImage"
         placeholder="https://..."
         error={errors.coverImage}
+        data-testid="input-cover-image"
       />
-      <Button type="submit">Save</Button>
+      <Button type="submit" data-testid="submit-button">
+        Save
+      </Button>
     </form>
   )
 }

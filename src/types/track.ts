@@ -47,13 +47,13 @@ export type CreateTrackDto = {
 export type UpdateTrackDto = {
   id: string
   /** New title for the track */
-  title?: string
+  title: string
   /** New artist for the track */
-  artist?: string
+  artist: string
   /** New album for the track */
   album?: string
   /** New genres for the track */
-  genres?: string[]
+  genres: string[]
   /** New cover image URL for the track */
   coverImage?: string
   /** New audio file for the track */

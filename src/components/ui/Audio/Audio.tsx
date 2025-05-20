@@ -30,6 +30,7 @@ export default function Audio({ id }: AudioProps) {
   const isCurrentTrackPlaying = isPlayingTrackId === id
   const tracks = useAppSelector(selectAllTrackList)
 
+  // Collect all available tracks
   const getSongsHelper = (tracks: TrackList) => {
     const songsIds = tracks.map(track => {
       if (track.audioFile && track.audioFile !== "") {

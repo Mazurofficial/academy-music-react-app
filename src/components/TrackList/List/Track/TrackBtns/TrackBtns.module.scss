@@ -4,25 +4,25 @@
     display: flex;
     gap: 15px;
 
-    .iconButton {
-        background-color: $primary-color;
-        color: white;
-        transition: background-color 0.3s;
-        padding: 12px;
-        border-radius: 50%;
-        border: 0;
-        height: 40px;
-        width: 40px;
+    // .iconButton {
+    //     background-color: $primary-color;
+    //     color: white;
+    //     transition: background-color 0.3s;
+    //     padding: 12px;
+    //     border-radius: 50%;
+    //     border: 0;
+    //     height: 40px;
+    //     width: 40px;
 
-        &:hover {
-            background-color: $secondary-color;
-        }
+    //     &:hover {
+    //         background-color: $secondary-color;
+    //     }
 
-        i {
-            height: 15px;
-            width: 15px;
-        }
-    }
+    //     i {
+    //         height: 15px;
+    //         width: 15px;
+    //     }
+    // }
 
     .deleteButton {
         background-color: $red-color;

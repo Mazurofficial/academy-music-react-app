@@ -9,7 +9,12 @@
         margin-bottom: 40px;
         color: white;
         border-radius: 10px;
-        background-image: url('../../assets/background.jpg');
+        background-color: #000000;
+        background-image: url('../../assets/background_1100x250.webp');
+        background-position: center;
+
+
+
         background-size: cover;
         box-shadow: 0 0 30px 20px rgba($color: #000000, $alpha: 0.05);
     }
@@ -23,6 +28,15 @@
 
         h1 {
             font-size: 32px;
+            background-image: url('../../assets/background_728x140.webp');
+        }
+    }
+}
+
+@media (max-width:412px) {
+    .trackList {
+        h1 {
+            background-image: url('../../assets/background_350x180.webp');
         }
     }
 }

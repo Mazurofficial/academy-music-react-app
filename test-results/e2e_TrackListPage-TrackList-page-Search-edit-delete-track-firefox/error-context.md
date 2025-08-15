@@ -1,0 +1,79 @@
+# Page snapshot
+
+```yaml
+- banner:
+  - link "logo":
+    - /url: /
+    - img "logo"
+  - button "+ Add track"
+- heading "Your personal tracklist" [level=1]
+- text: "Sort by:"
+- combobox "Sort by:":
+  - option "--"
+  - option "Title"
+  - option "Artist"
+  - option "Album"
+  - option "Created At"
+- text: "Order:"
+- combobox "Order:":
+  - option "Ascending" [selected]
+  - option "Descending"
+- text: "Genre:"
+- combobox "Genre:":
+  - option "All"
+  - option "Rock"
+  - option "Pop"
+  - option "Hip Hop"
+  - option "Jazz"
+  - option "Classical"
+  - option "Electronic"
+  - option "R&B"
+  - option "Country"
+  - option "Folk"
+  - option "Reggae"
+  - option "Metal"
+  - option "Blues"
+  - option "Indie"
+- text: "Tracks per page:"
+- combobox "Tracks per page:":
+  - option "5"
+  - option "10" [selected]
+  - option "15"
+  - option "20"
+  - option "50"
+- text: "Search:"
+- textbox "Search:": Test Track
+- button "Bulk Delete "
+- list:
+  - listitem:
+    - img
+    - heading "Test Track Edited" [level=4]
+    - text: (Test Album)
+    - heading "Test Artist" [level=5]
+    - paragraph: Upload audio file first.
+    - button ""
+    - button ""
+    - button ""
+  - listitem:
+    - img
+    - heading "Pagination Test Track 4" [level=4]
+    - heading "Pagination Artist" [level=5]
+    - paragraph: Electronic
+    - paragraph: Upload audio file first.
+    - button ""
+    - button ""
+    - button ""
+  - listitem:
+    - img
+    - heading "Pagination Test Track 3" [level=4]
+    - heading "Pagination Artist" [level=5]
+    - paragraph: Electronic
+    - paragraph: Upload audio file first.
+    - button ""
+    - button ""
+    - button ""
+- button "Previous" [disabled]
+- text: Page 1 of 1
+- button "Next" [disabled]
+- text: 
+```

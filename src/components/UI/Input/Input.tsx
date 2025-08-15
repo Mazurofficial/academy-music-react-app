@@ -1,45 +1,43 @@
-import styles from "./Input.module.scss"
+import TextField from '@mui/material/TextField';
+import styles from './Input.module.scss';
 
 export type InputProps = {
-  label?: string
-  error?: string
-} & React.InputHTMLAttributes<HTMLInputElement>
+   label?: string;
+   error?: boolean;
+   errorText?: string;
+   variant?: 'filled' | 'outlined' | 'standard';
+   fullWidth?: boolean;
+} & React.InputHTMLAttributes<HTMLInputElement>;
 
-export default function Input({
-  label,
-  name,
-  placeholder = "",
-  type = "text",
-  className = "",
-  disabled = false,
-  value,
-  error,
-  onChange,
-  ...rest
+export default function InputCustom({
+   label,
+   name,
+   placeholder = '',
+   type = 'text',
+   disabled = false,
+   value,
+   error,
+   onChange,
+   errorText,
+   variant = 'outlined',
+   fullWidth = false,
 }: InputProps) {
-  return (
-    <div className={`${styles.inputRow} ${className}`}>
-      {label && (
-        <label htmlFor={name} className={styles.label}>
-          {label}
-        </label>
-      )}
-      <input
-        id={name}
-        name={name}
-        type={type}
-        value={value}
-        onChange={onChange}
-        placeholder={placeholder}
-        className={`${styles.input} ${error ? styles.inputError : ""}`}
-        disabled={disabled}
-        {...rest}
+   return (
+      <TextField
+         label={label}
+         variant={variant}
+         id={name}
+         name={name}
+         type={type}
+         value={value}
+         onChange={onChange}
+         placeholder={placeholder}
+         className={styles.input}
+         disabled={disabled}
+         error={error}
+         helperText={errorText}
+         size="medium"
+         fullWidth={fullWidth}
       />
-      {error && (
-        <span data-testid={`error-${name ?? ""}`} className={styles.error}>
-          {error}
-        </span>
-      )}
-    </div>
-  )
+   );
 }

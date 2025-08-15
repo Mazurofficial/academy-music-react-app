@@ -1,28 +1,43 @@
-import styles from "./Button.module.scss"
+import styles from './Button.module.scss';
+import Button from '@mui/material/Button';
+import type { ReactNode } from 'react';
 
 export type ButtonProps = {
-  type?: "button" | "submit" | "reset"
-} & React.ButtonHTMLAttributes<HTMLButtonElement>
+   variant?: 'contained' | 'outlined' | 'text';
+   loading?: boolean;
+   startIcon?: ReactNode;
+   color?: 'primary' | 'secondary' | 'success' | 'error' | 'info' | 'warning';
+   dataTestId?: string;
+} & React.ButtonHTMLAttributes<HTMLButtonElement>;
 
-export default function Button({
-  children,
-  onClick,
-  type = "button",
-  disabled = false,
-  className = "",
-  title = "",
-  ...rest
+export default function ButtonCustom({
+   children,
+   onClick,
+   type = 'button',
+   variant = 'contained',
+   disabled = false,
+   className = '',
+   title = '',
+   loading = false,
+   startIcon = null,
+   color = 'primary',
+   dataTestId = '',
 }: ButtonProps) {
-  return (
-    <button
-      type={type}
-      onClick={onClick}
-      disabled={disabled}
-      className={`${styles.button} ${className}`}
-      title={title}
-      {...rest}
-    >
-      {children}
-    </button>
-  )
+   return (
+      <Button
+         onClick={onClick}
+         type={type}
+         disabled={disabled}
+         className={`${styles.button} ${className}}`}
+         title={title}
+         variant={variant}
+         loading={loading}
+         loadingPosition="start"
+         startIcon={startIcon}
+         color={color}
+         data-testid={dataTestId}
+      >
+         {children}
+      </Button>
+   );
 }

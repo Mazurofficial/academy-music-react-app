@@ -1,33 +1,31 @@
-import { useAppDispatch } from "../../../../../app/hooks"
+import { useAppDispatch } from '@/app/hooks';
 import {
-  openModal,
-  setModalEdit,
-} from "../../../../../features/modalWindow/modalWindowSlice"
-import type { Track } from "../../../../../types/track"
-import Button from "../../../../ui/Button/Button"
-import styles from "./TrackBtns.module.scss"
+   openModal,
+   setModalEdit,
+} from '@/features/modalWindow/modalWindowSlice';
+import type { TrackIdT } from '@/features/trackList/schema';
+import EditIcon from '@mui/icons-material/Edit';
+import IconButtonCustom from '@/components/ui/Button/IconButton';
 
 type EditTrackBtnProps = {
-  id: Track["id"]
-}
+   id: TrackIdT;
+};
 
 export default function EditTrackBtn({ id }: EditTrackBtnProps) {
-  const dispatch = useAppDispatch()
+   const dispatch = useAppDispatch();
 
-  // Open modal window with editting track form
-  const handleEditTrack = () => {
-    dispatch(setModalEdit(id))
-    dispatch(openModal())
-  }
+   const handleEditTrack = () => {
+      dispatch(setModalEdit(id));
+      dispatch(openModal());
+   };
 
-  return (
-    <Button
-      className={styles.iconButton}
-      onClick={handleEditTrack}
-      title="Edit meta"
-      data-testid={`edit-track-${id}`}
-    >
-      <i className="fa-solid fa-pen"></i>
-    </Button>
-  )
+   return (
+      <IconButtonCustom
+         ariaLabel="edit track"
+         onClick={handleEditTrack}
+         dataTestId={`edit-track-${id}`}
+      >
+         <EditIcon />
+      </IconButtonCustom>
+   );
 }

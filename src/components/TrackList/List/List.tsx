@@ -1,27 +1,17 @@
-import { useAppSelector } from "../../../app/hooks"
-import {
-  selectAllTrackList,
-  selectTrackListStatus,
-} from "../../../features/trackList/trackListSelectors"
-import styles from "./List.module.scss"
-import Track from "./Track/Track"
-import { useTrackList } from "../../../features/trackList/useTrackList"
-import Preloader from "../../ui/Preloader/Preloader"
+import { useAppSelector } from '@/app/hooks';
+import { selectAllTrackList } from '@/features/trackList/trackListSelectors';
+import styles from './List.module.scss';
+import Track from './Track/Track';
 
 export default function List() {
-  const list = useAppSelector(selectAllTrackList)
-  const loadingStatus = useAppSelector(selectTrackListStatus)
-  useTrackList()
-
-  if (loadingStatus === "loading") {
-    return <Preloader />
-  }
-
-  return (
-    <ul className={styles.list}>
-      {list.map(track => (
-        <Track id={track.id} key={track.id} />
-      ))}
-    </ul>
-  )
+   const trackListIds = useAppSelector(selectAllTrackList).ids;
+   if (trackListIds.length > 0)
+      return (
+         <ul data-testid="track-list" className={styles.list}>
+            {trackListIds.map((trackId) => (
+               <Track id={trackId} key={trackId} />
+            ))}
+         </ul>
+      );
+   return <h2>Sorry! There are no such tracks</h2>;
 }

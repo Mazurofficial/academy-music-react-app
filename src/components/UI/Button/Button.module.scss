@@ -1,4 +1,4 @@
-@use '../../../styles/variables' as *;
+@use '@/styles/variables' as *;
 
 .button {
     outline: none;
@@ -7,21 +7,36 @@
     padding: 10px 16px;
 
     font-size: 14px;
-    font-weight: 300;
+    line-height: 20px;
+    letter-spacing: 0.1px;
+    font-weight: 500;
 
     border-radius: 10px;
     border: none;
 
-    background-color: $primary-color;
-    color: white;
     transition: background-color 0.3s;
 
+    background-color: $primary-color;
+    color: white;
+
     &:hover {
-        background-color: $secondary-color;
+        background-color: $primary-hover-color;
     }
 
     &:disabled {
         opacity: .5;
         pointer-events: none;
+    }
+}
+
+.secondary {
+    background-color: white;
+    color: $primary-color;
+    border: 1px solid $primary-color;
+
+    &:hover {
+        color: $dark-color;
+        border: 1px solid $dark-color;
+        background-color: white;
     }
 }

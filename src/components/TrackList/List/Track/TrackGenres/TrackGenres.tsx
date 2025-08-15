@@ -1,18 +1,20 @@
-import { useAppSelector } from "../../../../../app/hooks"
-import { selectTrackById } from "../../../../../features/trackList/trackListSelectors"
-import type { Track } from "../../../../../types/track"
-import Genre from "./Genre"
-import styles from "./Trackgenres.module.scss"
+import { useAppSelector } from '@/app/hooks';
+import { selectTrackById } from '@/features/trackList/trackListSelectors';
+import type { TrackIdT } from '@/features/trackList/schema';
+import Genre from './Genre';
+import styles from './Trackgenres.module.scss';
 
 type TrackGenresProps = {
-  id: Track["id"]
-}
+   id: TrackIdT;
+};
 
 export default function TrackGenres({ id }: TrackGenresProps) {
-  const track = useAppSelector(state => selectTrackById(state, id))
-  return (
-    <div className={styles.genres}>
-      {track?.genres.map((genre, i) => <Genre key={i} genre={genre} />)}
-    </div>
-  )
+   const track = useAppSelector((state) => selectTrackById(state, id));
+   return (
+      <div className={styles.genres}>
+         {track.genres.map((genre) => (
+            <Genre key={genre} genre={genre} />
+         ))}
+      </div>
+   );
 }

@@ -18,16 +18,16 @@
     width: 100%;
 }
 
-.playButton {
-    height: 40px;
-    width: 40px;
-    border-radius: 50%;
+// .playButton {
+//     height: 40px;
+//     width: 40px;
+//     border-radius: 50%;
 
-    &:disabled {
-        pointer-events: none;
-        opacity: 0.5;
-    }
-}
+//     &:disabled {
+//         pointer-events: none;
+//         opacity: 0.5;
+//     }
+// }
 
 .progressBar {
     flex: 1;
